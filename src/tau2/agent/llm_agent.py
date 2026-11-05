@@ -124,7 +124,7 @@ class LLMAgent(
             state.messages.extend(message.tool_messages)
         else:
             state.messages.append(message)
-        messages = state.system_messages + state.messages
+        messages = self._build_model_context(state)
         assistant_message = generate(
             model=self.llm,
             tools=self.tools,
@@ -133,6 +133,12 @@ class LLMAgent(
             **self.llm_args,
         )
         return assistant_message
+
+    def _build_model_context(
+        self, state: LLMAgentStateType
+    ) -> list[APICompatibleMessage]:
+        """Build model input; the default preserves the original full history."""
+        return state.system_messages + state.messages
 
 
 AGENT_GT_INSTRUCTION = """
