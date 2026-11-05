@@ -1,0 +1,10 @@
+# Byte-frozen independent baseline: preserve both files exactly on every OS.
+tests/memory_support.py -text
+
+# New portable material uses LF; original historical files remain untouched.
+validation/runtime_support/*.py text eol=lf
+validation/repository_state.py text eol=lf
+tests/fixtures/memory/*.json text eol=lf
+tests/fixtures/memory/train34_replay/*.json text eol=lf
+# This exception must follow the wildcard above.
+tests/fixtures/memory/full_history_fc0055dc.json -text
