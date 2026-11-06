@@ -1,3 +1,43 @@
+# Agent Memory Harness｜任务内记忆与可追溯评测
+
+本项目在 Sierra Research 的 τ-bench 上实现可替换的任务内记忆策略，复用上游 Agent、
+User Simulator、Retail 工具、任务数据和评分器。固定上游来源为
+`fc0055dc4e0a316c3f83133267fbd6faaa770992`；完整上游 Git 历史、下方原始说明与
+[MIT 许可证](LICENSE) 保留。
+
+- `full_history`：完整历史基线，不裁剪、不新增记忆提示词。
+- `budget_window`：在输入预算内保留完整交互块及工具调用/返回配对。
+- `structured_memory`：从 Agent 可见消息和工具数据维护带来源的事实、确认边界与冲突状态。
+- 统一执行器记录请求账本、资源停止、模型可见上下文及官方评分，导出 JSON、CSV 和中文摘要；提供离线命令行回放。
+
+当前是工程验证项目。Mock 回放不等于真实 Agent 成功率；三策略尚无完整、可信的真实对比结论。
+StructuredMemory 在一个已保存的 train34 前缀中仍触发输入预算停止，未以删减必要信息或提高预算掩盖该限制。
+本地 Token 估算、供应商 usage、未知费用分别记录，不声称已证明性能或成本提升。
+
+## 离线使用
+
+先按下方上游安装说明准备 Python 3.12/3.13 和项目依赖。在仓库根目录 PowerShell 中执行：
+
+```powershell
+# 三策略固定 Mock 回放；不读取真实 Key，不发送真实 API 请求
+& .\.venv\Scripts\python.exe -X utf8 -B validation/run_memory_comparison.py --suite --mock --task-ids 34
+
+# 将 $run 设为上一命令输出的 artifacts 目录，再查看 Demo 或导出
+& .\.venv\Scripts\python.exe -X utf8 -B validation/run_memory_comparison.py --demo $run --task 34
+& .\.venv\Scripts\python.exe -X utf8 -B validation/run_memory_comparison.py --export $run
+```
+
+正式源码与必要测试样本已使用稳定目录；历史时间戳目录不属于克隆后运行所需文件。
+默认入口只准备离线计划。真实模型执行必须另外提供绑定实验身份的新授权，旧授权不能重复消费。
+不要将 API Key、私有环境配置或真实请求账本提交到 Git。
+
+参见 [记忆接口与窗口策略](docs/memory_strategy.md)、[结构化记忆](docs/structured_memory.md)、
+[统一评测与复跑说明](docs/memory_evaluation.md)。
+
+---
+
+以下为保留的上游项目说明。
+
 # $\tau$-Bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains
 
 [![python](https://img.shields.io/badge/Python-3.12%2B-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
