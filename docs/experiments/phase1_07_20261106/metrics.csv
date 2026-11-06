@@ -1,0 +1,10 @@
+﻿task_id,strategy,status,outcome_class,stop_reason,official_reward,db_reward,scoring_valid,requests,tool_calls,tool_errors,trimmed_generations,removed_blocks,stored_facts,active_facts,total_seconds,unknown_usage_attempts,executed,source_kind,valid_scored_trials,input_tokens,output_tokens,total_tokens,estimated_cost_cny,supplier_bill_cny,cost_kind,usage_source,agent_requests,agent_prompt_tokens,agent_completion_tokens,agent_total_tokens,user_requests,user_prompt_tokens,user_completion_tokens,user_total_tokens
+69,full_history,execution_error,execution_error,shared_execution_or_protocol_error,,,False,4,0,0,0,0,0,0,15.539668799960054,0,True,real,0,11460,718,12178,0.0210212,,user_quoted_rates_times_supplier_usage,supplier_raw_response,2,10386,434,10820,2,1074,284,1358
+69,budget_window,not_executed,not_executed,shared_execution_or_protocol_error,,,False,0,0,0,0,0,0,0,,0,False,not_executed,0,,,,,,not_executed,not_executed,0,,,,0,,,
+69,structured_memory,not_executed,not_executed,shared_execution_or_protocol_error,,,False,0,0,0,0,0,0,0,,0,False,not_executed,0,,,,,,not_executed,not_executed,0,,,,0,,,
+73,full_history,not_executed,not_executed,shared_execution_or_protocol_error,,,False,0,0,0,0,0,0,0,,0,False,not_executed,0,,,,,,not_executed,not_executed,0,,,,0,,,
+73,budget_window,not_executed,not_executed,shared_execution_or_protocol_error,,,False,0,0,0,0,0,0,0,,0,False,not_executed,0,,,,,,not_executed,not_executed,0,,,,0,,,
+73,structured_memory,not_executed,not_executed,shared_execution_or_protocol_error,,,False,0,0,0,0,0,0,0,,0,False,not_executed,0,,,,,,not_executed,not_executed,0,,,,0,,,
+93,full_history,not_executed,not_executed,shared_execution_or_protocol_error,,,False,0,0,0,0,0,0,0,,0,False,not_executed,0,,,,,,not_executed,not_executed,0,,,,0,,,
+93,budget_window,not_executed,not_executed,shared_execution_or_protocol_error,,,False,0,0,0,0,0,0,0,,0,False,not_executed,0,,,,,,not_executed,not_executed,0,,,,0,,,
+93,structured_memory,not_executed,not_executed,shared_execution_or_protocol_error,,,False,0,0,0,0,0,0,0,,0,False,not_executed,0,,,,,,not_executed,not_executed,0,,,,0,,,
