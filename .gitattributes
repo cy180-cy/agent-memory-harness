@@ -7,4 +7,4 @@ validation/repository_state.py text eol=lf
 tests/fixtures/memory/*.json text eol=lf
 tests/fixtures/memory/train34_replay/*.json text eol=lf
 # This exception must follow the wildcard above.
-tests/fixtures/memory/full_history_fc0055dc.json -text
+tests/fixtures/memory/full_history_fc0055dc.json -text whitespace=cr-at-eol

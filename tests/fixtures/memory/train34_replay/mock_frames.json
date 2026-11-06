@@ -1,0 +1,442 @@
+[
+  {
+    "role": "user",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.8-flash",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Hey there! So I recently ordered a few things for a work-from-home setup along with some hiking gear, but my company just said we’re going back to the office. I’m hoping I can cancel or return the office stuff while keeping the hiking stuff."
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-1",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Hello! I'd be happy to help you with canceling or returning items from your order. To get started, I'll need to authenticate your identity first. \n\nCould you please provide your email address so I can look up your account?"
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-2",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "user",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.8-flash",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Ah, well, that's a bit of a problem. I don't actually have an email address. I know, I know—very 2024 of me. I'm Noah Patel, living in the Big Apple, zip code 10108. Is there another way we can verify who I am? Maybe by phone number or something?"
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-3",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "call_8f584a7486084a1883ce838c",
+                  "type": "function",
+                  "function": {
+                    "name": "find_user_id_by_name_zip",
+                    "arguments": "{\"first_name\": \"Noah\", \"last_name\": \"Patel\", \"zip\": \"10108\"}"
+                  },
+                  "index": 0
+                }
+              ]
+            },
+            "finish_reason": "tool_calls",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-4",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "call_9f9c3d08df4c470992fe9843",
+                  "type": "function",
+                  "function": {
+                    "name": "get_user_details",
+                    "arguments": "{\"user_id\": \"noah_patel_6952\"}"
+                  },
+                  "index": 0
+                }
+              ]
+            },
+            "finish_reason": "tool_calls",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-5",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "call_3b4c10b56d3b41f8b3c3ea31",
+                  "type": "function",
+                  "function": {
+                    "name": "get_order_details",
+                    "arguments": "{\"order_id\": \"#W1845024\"}"
+                  },
+                  "index": 0
+                }
+              ]
+            },
+            "finish_reason": "tool_calls",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-6",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "call_520183cda40d4ff498a3e911",
+                  "type": "function",
+                  "function": {
+                    "name": "get_order_details",
+                    "arguments": "{\"order_id\": \"#W7043598\"}"
+                  },
+                  "index": 0
+                }
+              ]
+            },
+            "finish_reason": "tool_calls",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-7",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "call_35bfa866e3b14d9886463766",
+                  "type": "function",
+                  "function": {
+                    "name": "get_order_details",
+                    "arguments": "{\"order_id\": \"#W6111398\"}"
+                  },
+                  "index": 0
+                }
+              ]
+            },
+            "finish_reason": "tool_calls",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-8",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Thank you for providing your information, Noah! I was able to locate your account successfully.\n\nI can see you have a pending order (#W1845024) that contains both work-from-home items and hiking gear. Here's what's in that order:\n\n**Work-from-home/Office items:**\n- Mechanical Keyboard (tactile switches, full size)\n- Headphones (over-ear, wireless, black)\n- Office Chair (fabric, blue, adjustable armrests)\n\n**Other items:**\n- Cycling Helmet (size S, red)\n- Hiking Boots (size 12, leather, waterproof)\n\nSince your order is still in \"pending\" status, I have a couple of options to help you:\n\n**Option 1: Cancel the entire order**\nI can cancel the entire order, which would refund all items including the hiking boots. You would then need to place a new order specifically for the hiking boots. The refund would go back to your PayPal account within 5-7 business days.\n\n**Option 2: Keep the entire order as is**\nYou could keep all items, including the office equipment, in case you might need them later.\n\nUnfortunately, I cannot cancel just the office items while keeping the hiking boots in the same order, as our system only allows full order cancellations for pending orders, not partial cancellations.\n\nWhich option would you prefer? If you'd like to cancel the entire order, I'll need to know the reason for cancellation (either \"no longer needed\" or \"ordered by mistake\")."
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-9",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "user",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.8-flash",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Oh, come on, no partial cancellation? That's a bummer. I was really hoping to just ditch the office chair and keyboard without losing my sweet hiking boots. The WFH life has me anxious enough without me having to re-order everything like some kind of shopping hamster on a wheel.\n\nBut hey, if I can't cancel just the office stuff, then let's go with a different plan. Can you just change the shipping address on this order to my NYC place? I'll be back in the Big Apple soon enough, and I can deal with returning the office items later when I get them. My address is 10108, in New York City. Can you do that for me?"
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-10",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "I understand your frustration, Noah! Unfortunately, our system doesn't allow partial cancellations for pending orders - it's all or nothing. But I can definitely help you change the shipping address to your NYC location.\n\nI can see your current order is set to ship to your Seattle address. I can change it to your New York address at 224 Elm Street, Suite 491, New York, NY 10108.\n\nBefore I make this change, let me confirm the details:\n\n**Current shipping address:**\n517 Lakeview Drive, Suite 183\nSeattle, WA 98195\nUSA\n\n**New shipping address:**\n224 Elm Street, Suite 491\nNew York, NY 10108\nUSA\n\nThis change will only affect the shipping address for this pending order (#W1845024). All other order details will remain the same.\n\nTo proceed with this address change, I'll need your explicit confirmation. Would you like me to change the shipping address to your NYC location? Please confirm with a \"yes\" to proceed."
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-11",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "user",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.8-flash",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Yeah, that's the one! 10108, the heart of the Big Apple. I'm basically a New Yorker who temporarily escaped to Seattle for the WFH experiment, and now the office is calling me back like a sad little alarm clock. \n\nYes, please go ahead and change the shipping address to that NYC location. I'll deal with the office stuff returns later—maybe I'll just pretend the mechanical keyboard is for \"gaming\" and the office chair is for \"posture improvement.\" 😅"
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-12",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "call_84b0814cc99a42958872e88e",
+                  "type": "function",
+                  "function": {
+                    "name": "modify_pending_order_address",
+                    "arguments": "{\"order_id\": \"#W1845024\", \"address1\": \"224 Elm Street\", \"address2\": \"Suite 491\", \"city\": \"New York\", \"state\": \"NY\", \"zip\": \"10108\", \"country\": \"USA\"}"
+                  },
+                  "index": 0
+                }
+              ]
+            },
+            "finish_reason": "tool_calls",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-13",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Perfect! I've successfully changed the shipping address for your order #W1845024 to your NYC location:\n\n**New shipping address:**\n224 Elm Street, Suite 491\nNew York, NY 10108\nUSA\n\nYour order will now be delivered to your New York address instead of the Seattle location. All your items (Mechanical Keyboard, Cycling Helmet, Headphones, Office Chair, and Hiking Boots) will be shipped to this new address.\n\nOnce your order is delivered, you'll have the option to return the office items (Mechanical Keyboard, Headphones, and Office Chair) while keeping your hiking gear. When that time comes, just contact us again and we can help you process the returns for those specific items.\n\nIs there anything else I can help you with regarding this order or your account?"
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-14",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "user",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.8-flash",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Awesome, thank you so much! The address change is a relief—my anxiety about this whole WFH-to-office shuffle has calmed down a little. 😄\n\nBefore I go, I do have a couple of quick questions about the returns I'll be doing later once I get everything delivered to NYC:\n\n1. What's the total amount I'll be getting back for the three office items (the keyboard, headphones, and office chair)?\n2. And the refund will go back to my original payment method, right? I paid with PayPal, so I just want to make sure that's the case.\n\nNo rush on anything, I just want to have the info in my back pocket for when I'm ready to send those office things back."
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-15",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "agent",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.7-plus",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Great question! Let me break down the return details for you:\n\n**1. Total refund amount for the office items:**\n- Mechanical Keyboard: $235.13\n- Headphones: $346.97\n- Office Chair: $511.24\n- **Total: $1,093.34**\n\n**2. Refund method:**\nYes, the refund will go back to your original payment method, which is your PayPal account (paypal_3169710). Since you paid with PayPal, the refund will be processed back to that same PayPal account within 5-7 business days after we process the return.\n\n**Important notes for when you're ready to return:**\n- You can only return items after your order status changes to \"delivered\" (which will happen once your package arrives in NYC)\n- When you contact us for the return, we'll need to know exactly which items you want to return\n- You'll receive a follow-up email with instructions on how and where to return the items\n- The order status will change to \"return requested\" once we process the return\n\nSo to summarize: you'll get $1,093.34 back to your PayPal account for the three office items, and you'll keep your hiking boots and cycling helmet.\n\nIs there anything else I can help you with today, Noah?"
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-16",
+        "created": 1
+      }
+    }
+  },
+  {
+    "role": "user",
+    "evidence": {
+      "raw_response": {
+        "object": "chat.completion",
+        "model": "qwen3.8-flash",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "$1,093.34 back to my PayPal—music to my anxious, WFH-scarred ears! 🎶 I'll keep the boots and the helmet for when I need to escape the office and pretend I'm still in the great outdoors. \n\nThank you so much for being patient with me today, especially since I don't have an email address like some kind of digital hermit. You've been a lifesaver, and I feel like I can finally breathe a little easier knowing I don't have to re-order my hiking stuff.\n\nHave a great day! I'll be back in NYC, hopefully slightly less anxious, and I'll hit you up when it's time to ship those office items back. Take care! 🏔️\n\n###STOP###"
+            },
+            "finish_reason": "stop",
+            "logprobs": null
+          }
+        ],
+        "id": "fixture-response-17",
+        "created": 1
+      }
+    }
+  }
+]

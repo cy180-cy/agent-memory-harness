@@ -1,0 +1,353 @@
+{
+  "source_kind": "saved_synthetic_mock_excerpt",
+  "source_sha256": "3d7464d3dc09255975f615d3a3e2bd8775c7fc13584bd87791eb20fea2fd57ae",
+  "effective_group": {
+    "memory": {
+      "name": "structured_memory",
+      "version": "1",
+      "config": {
+        "max_input_tokens": 7168,
+        "safety_margin_tokens": 128
+      }
+    },
+    "task_id": "34",
+    "group": "B",
+    "output_budget_version": "total-output-v2"
+  },
+  "summary": {
+    "status": "completed",
+    "mode": "mock",
+    "actually_executed": true,
+    "official_reward": 1.0,
+    "db_result": {
+      "db_match": true,
+      "db_reward": 1.0
+    },
+    "scoring_validity": "official_score_recorded"
+  },
+  "official_reward": {
+    "reward": 1.0,
+    "db_check": {
+      "db_match": true,
+      "db_reward": 1.0
+    },
+    "env_assertions": null,
+    "action_checks": null,
+    "nl_assertions": null,
+    "communicate_checks": null,
+    "reward_basis": [
+      "DB"
+    ],
+    "reward_breakdown": {},
+    "info": {
+      "env": {
+        "note": "No expected actions or env assertions"
+      },
+      "nl": null,
+      "communicate": {
+        "note": "No communicate_info to evaluate"
+      },
+      "action": {
+        "note": "No actions to evaluate"
+      }
+    }
+  },
+  "agent_state": {
+    "memory": {
+      "facts": [
+        {
+          "id": "f0",
+          "category": "task_goal",
+          "scope": {},
+          "path": "0",
+          "value": {
+            "verbatim": "{\"goal\": \"check records\", \"facts\": {\"reference\": \"R1\"}}"
+          },
+          "confidence": "verbatim_unparsed",
+          "status": "active",
+          "sources": [
+            {
+              "message_index": 0,
+              "role": "user"
+            }
+          ],
+          "batch": null
+        },
+        {
+          "id": "f1",
+          "category": "task_goal",
+          "scope": {},
+          "path": "declared_goal",
+          "value": "check records",
+          "confidence": "user_reported",
+          "status": "active",
+          "sources": [
+            {
+              "message_index": 0,
+              "role": "user"
+            }
+          ],
+          "batch": null
+        },
+        {
+          "id": "f2",
+          "category": "user_facts",
+          "scope": {},
+          "path": "/reference",
+          "value": "R1",
+          "confidence": "user_reported",
+          "status": "active",
+          "sources": [
+            {
+              "message_index": 0,
+              "role": "user"
+            }
+          ],
+          "batch": null
+        },
+        {
+          "id": "f3",
+          "category": "user_statements",
+          "scope": {},
+          "path": "2",
+          "value": {
+            "verbatim": "past question"
+          },
+          "confidence": "verbatim_unparsed",
+          "status": "active",
+          "sources": [
+            {
+              "message_index": 2,
+              "role": "user"
+            }
+          ],
+          "batch": null
+        },
+        {
+          "id": "f4",
+          "category": "user_statements",
+          "scope": {},
+          "path": "4",
+          "value": {
+            "verbatim": "previous request"
+          },
+          "confidence": "verbatim_unparsed",
+          "status": "active",
+          "sources": [
+            {
+              "message_index": 4,
+              "role": "user"
+            }
+          ],
+          "batch": null
+        },
+        {
+          "id": "f5",
+          "category": "user_statements",
+          "scope": {},
+          "path": "6",
+          "value": {
+            "verbatim": "SYNTHETIC_USER"
+          },
+          "confidence": "verbatim_unparsed",
+          "status": "active",
+          "sources": [
+            {
+              "message_index": 6,
+              "role": "user"
+            }
+          ],
+          "batch": null
+        },
+        {
+          "id": "f6",
+          "category": "tool_operations",
+          "scope": {
+            "call_id": "structured-executor-tool"
+          },
+          "path": "result",
+          "value": {
+            "tool": "get_users",
+            "arguments": {},
+            "error": false,
+            "result_message_index": 8,
+            "result": "structured_fields_recorded_separately",
+            "confirmation_id": null
+          },
+          "confidence": "tool_observed",
+          "status": "active",
+          "sources": [
+            {
+              "message_index": 7,
+              "role": "assistant",
+              "call_id": "structured-executor-tool",
+              "tool": "get_users"
+            },
+            {
+              "message_index": 8,
+              "role": "tool",
+              "call_id": "structured-executor-tool",
+              "tool": "get_users"
+            }
+          ],
+          "batch": null
+        },
+        {
+          "id": "f7",
+          "category": "entities",
+          "scope": {
+            "call_id": "structured-executor-tool"
+          },
+          "path": "/0/name",
+          "value": "Test User",
+          "confidence": "tool_observed_last_seen",
+          "status": "active",
+          "sources": [
+            {
+              "message_index": 7,
+              "role": "assistant",
+              "call_id": "structured-executor-tool",
+              "tool": "get_users"
+            },
+            {
+              "message_index": 8,
+              "role": "tool",
+              "call_id": "structured-executor-tool",
+              "tool": "get_users"
+            }
+          ],
+          "batch": 7
+        }
+      ]
+    },
+    "context_selections": [
+      {
+        "strategy": "structured_memory",
+        "version": "1",
+        "official_reward": null,
+        "max_input_tokens": 7168,
+        "safety_margin_tokens": 128,
+        "removed_blocks": [
+          {
+            "start": 0,
+            "end": 2,
+            "kind": "user_turn",
+            "closed_by_next_user": true
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "kind": "user_turn",
+            "closed_by_next_user": true
+          }
+        ],
+        "removed_block_count": 2,
+        "memory_fact_ids": [
+          "f0",
+          "f1",
+          "f2",
+          "f3"
+        ],
+        "counter": {
+          "name": "complete-json-bpe-surrogate",
+          "version": "1",
+          "tiktoken_version": "0.14.0",
+          "litellm_version": "1.82.6",
+          "tokenizer": "cl100k_base (installed LiteLLM default_encoding)",
+          "fallback": "generic local BPE, not Qwen-native tokenization",
+          "is_estimate": true,
+          "provider_framing_verified": false
+        },
+        "tool_pairing": {
+          "status": "passed",
+          "calls": 0,
+          "results": 0
+        },
+        "estimated_input_tokens_before": 18623,
+        "estimated_input_tokens_after": 908,
+        "retained_blocks": [
+          {
+            "start": 4,
+            "end": 6,
+            "kind": "user_turn",
+            "closed_by_next_user": true
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "kind": "user_turn",
+            "closed_by_next_user": false
+          }
+        ],
+        "raw_message_start": 4,
+        "required_fact_count": 4,
+        "omitted_fact_count": 0,
+        "status": "structured"
+      },
+      {
+        "strategy": "structured_memory",
+        "version": "1",
+        "official_reward": null,
+        "max_input_tokens": 7168,
+        "safety_margin_tokens": 128,
+        "removed_blocks": [
+          {
+            "start": 0,
+            "end": 2,
+            "kind": "user_turn",
+            "closed_by_next_user": true
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "kind": "user_turn",
+            "closed_by_next_user": true
+          }
+        ],
+        "removed_block_count": 2,
+        "memory_fact_ids": [
+          "f0",
+          "f1",
+          "f2",
+          "f3"
+        ],
+        "counter": {
+          "name": "complete-json-bpe-surrogate",
+          "version": "1",
+          "tiktoken_version": "0.14.0",
+          "litellm_version": "1.82.6",
+          "tokenizer": "cl100k_base (installed LiteLLM default_encoding)",
+          "fallback": "generic local BPE, not Qwen-native tokenization",
+          "is_estimate": true,
+          "provider_framing_verified": false
+        },
+        "tool_pairing": {
+          "status": "passed",
+          "calls": 1,
+          "results": 1
+        },
+        "estimated_input_tokens_before": 18704,
+        "estimated_input_tokens_after": 989,
+        "retained_blocks": [
+          {
+            "start": 4,
+            "end": 6,
+            "kind": "user_turn",
+            "closed_by_next_user": true
+          },
+          {
+            "start": 6,
+            "end": 9,
+            "kind": "user_turn",
+            "closed_by_next_user": false
+          }
+        ],
+        "raw_message_start": 4,
+        "required_fact_count": 4,
+        "omitted_fact_count": 0,
+        "status": "structured"
+      }
+    ]
+  },
+  "trajectory": []
+}

@@ -1,0 +1,82 @@
+{
+  "user512": {
+    "source_kind": "captured_response_excerpt",
+    "original_file_sha256": "6b5969b79e4f0f35260f6a245e4b7aa7ebb39c7a4703adbf76a2d9eb90b49ecc",
+    "redactions": [
+      "response ID",
+      "timestamp",
+      "reasoning text",
+      "request metadata"
+    ],
+    "body": {
+      "object": "chat.completion",
+      "model": "qwen3.8-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "Oh wow, okay, so the system is basically saying \"pick all or nothing, Noah, like a bad cafeteria meal.\" And honestly? Re-ordering the hiking stuff sounds like more chaos, and I'm already running on too much coffee and not enough sunlight. So let's not cancel the whole thing.\n\nHere's what I'd rather do: keep the order going, but just change the shipping address to my NYC place — I'm in the Big Apple, zip code 10108. I'll just deal with returning the office items (the keyboard, chair, and headphones) after they show up. The hiking boots and helmet can stay, that's my little slice of the great outdoors I'm clinging to.\n\nCan you update the shipping address on order #W184502"
+          },
+          "finish_reason": "length",
+          "logprobs": null
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1422,
+        "total_tokens": 1934,
+        "completion_tokens": 512,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 1422
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 344,
+          "text_tokens": 512
+        }
+      },
+      "id": "fixture-user512",
+      "created": 1
+    }
+  },
+  "agent1024": {
+    "source_kind": "captured_response_excerpt",
+    "original_file_sha256": "a03c802c9d4797685f1c775abc77258933b52aee96b9670c4c54affcab706ad0",
+    "redactions": [
+      "response ID",
+      "timestamp",
+      "reasoning text",
+      "request metadata"
+    ],
+    "body": {
+      "object": "chat.completion",
+      "model": "qwen3.7-plus",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": ""
+          },
+          "finish_reason": "length",
+          "logprobs": null
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 7586,
+        "total_tokens": 8610,
+        "completion_tokens": 1024,
+        "prompt_tokens_details": {
+          "cached_tokens": 6912,
+          "text_tokens": 7586
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1024,
+          "text_tokens": 1024
+        }
+      },
+      "id": "fixture-agent1024",
+      "created": 1
+    }
+  }
+}

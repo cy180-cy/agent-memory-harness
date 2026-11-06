@@ -1,0 +1,442 @@
+{
+  "source_kind": "historical_real_allowlisted_metrics_excerpt",
+  "source_sha256": "8f97389efc622f1484b1488d12c511c24e42e51f6913086f65945d14ab6a9550",
+  "summary": {
+    "status": "completed",
+    "evaluation_basis_warning": false,
+    "reward_info": {
+      "reward": 1.0,
+      "db_check": {
+        "db_match": true,
+        "db_reward": 1.0
+      },
+      "env_assertions": [],
+      "action_checks": [
+        {
+          "action": {
+            "action_id": "34_0",
+            "requestor": "assistant",
+            "name": "find_user_id_by_name_zip",
+            "arguments": {
+              "first_name": "Noah",
+              "last_name": "Patel",
+              "zip": "10108"
+            },
+            "info": null,
+            "compare_args": null
+          },
+          "action_match": true,
+          "action_reward": 1.0,
+          "tool_type": "read"
+        },
+        {
+          "action": {
+            "action_id": "34_1",
+            "requestor": "assistant",
+            "name": "get_user_details",
+            "arguments": {
+              "user_id": "noah_patel_6952"
+            },
+            "info": null,
+            "compare_args": null
+          },
+          "action_match": true,
+          "action_reward": 1.0,
+          "tool_type": "read"
+        },
+        {
+          "action": {
+            "action_id": "34_2",
+            "requestor": "assistant",
+            "name": "get_order_details",
+            "arguments": {
+              "order_id": "#W6111398"
+            },
+            "info": null,
+            "compare_args": null
+          },
+          "action_match": true,
+          "action_reward": 1.0,
+          "tool_type": "read"
+        },
+        {
+          "action": {
+            "action_id": "34_3",
+            "requestor": "assistant",
+            "name": "get_order_details",
+            "arguments": {
+              "order_id": "#W7043598"
+            },
+            "info": null,
+            "compare_args": null
+          },
+          "action_match": true,
+          "action_reward": 1.0,
+          "tool_type": "read"
+        },
+        {
+          "action": {
+            "action_id": "34_4",
+            "requestor": "assistant",
+            "name": "get_order_details",
+            "arguments": {
+              "order_id": "#W1845024"
+            },
+            "info": null,
+            "compare_args": null
+          },
+          "action_match": true,
+          "action_reward": 1.0,
+          "tool_type": "read"
+        },
+        {
+          "action": {
+            "action_id": "34_5",
+            "requestor": "assistant",
+            "name": "modify_pending_order_address",
+            "arguments": {
+              "order_id": "#W1845024",
+              "address1": "224 Elm Street",
+              "address2": "Suite 491",
+              "city": "New York",
+              "country": "USA",
+              "state": "NY",
+              "zip": "10108"
+            },
+            "info": null,
+            "compare_args": null
+          },
+          "action_match": true,
+          "action_reward": 1.0,
+          "tool_type": "write"
+        }
+      ],
+      "nl_assertions": null,
+      "communicate_checks": null,
+      "reward_basis": [
+        "DB"
+      ],
+      "reward_breakdown": {
+        "DB": 1.0
+      },
+      "info": {
+        "env": null,
+        "nl": null,
+        "communicate": {
+          "note": "No communicate_info to evaluate"
+        },
+        "action": null
+      }
+    },
+    "actual_api_requests": 17
+  },
+  "task_id": "34",
+  "events": [
+    {
+      "ordinal": 1,
+      "role": "user",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 557,
+        "total_tokens": 758,
+        "completion_tokens": 201,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 557
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 146,
+          "text_tokens": 201
+        }
+      }
+    },
+    {
+      "ordinal": 2,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 5142,
+        "total_tokens": 5246,
+        "completion_tokens": 104,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 5142
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 53,
+          "text_tokens": 104
+        }
+      }
+    },
+    {
+      "ordinal": 3,
+      "role": "user",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 671,
+        "total_tokens": 823,
+        "completion_tokens": 152,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 671
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 75,
+          "text_tokens": 152
+        }
+      }
+    },
+    {
+      "ordinal": 4,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 5274,
+        "total_tokens": 5394,
+        "completion_tokens": 120,
+        "prompt_tokens_details": {
+          "cached_tokens": 4608,
+          "text_tokens": 5274
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 56,
+          "text_tokens": 120
+        }
+      }
+    },
+    {
+      "ordinal": 5,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 5362,
+        "total_tokens": 5429,
+        "completion_tokens": 67,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5362
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 30,
+          "text_tokens": 67
+        }
+      }
+    },
+    {
+      "ordinal": 6,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 5587,
+        "total_tokens": 5671,
+        "completion_tokens": 84,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5587
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 46,
+          "text_tokens": 84
+        }
+      }
+    },
+    {
+      "ordinal": 7,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 6212,
+        "total_tokens": 6666,
+        "completion_tokens": 454,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 6212
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 416,
+          "text_tokens": 454
+        }
+      }
+    },
+    {
+      "ordinal": 8,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 6864,
+        "total_tokens": 7035,
+        "completion_tokens": 171,
+        "prompt_tokens_details": {
+          "cached_tokens": 5760,
+          "text_tokens": 6864
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 133,
+          "text_tokens": 171
+        }
+      }
+    },
+    {
+      "ordinal": 9,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 7514,
+        "total_tokens": 8747,
+        "completion_tokens": 1233,
+        "prompt_tokens_details": {
+          "cached_tokens": 6272,
+          "text_tokens": 7514
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 902,
+          "text_tokens": 1233
+        }
+      }
+    },
+    {
+      "ordinal": 10,
+      "role": "user",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 1087,
+        "total_tokens": 1340,
+        "completion_tokens": 253,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 1087
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 104,
+          "text_tokens": 253
+        }
+      }
+    },
+    {
+      "ordinal": 11,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 7978,
+        "total_tokens": 8491,
+        "completion_tokens": 513,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 7978
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 272,
+          "text_tokens": 513
+        }
+      }
+    },
+    {
+      "ordinal": 12,
+      "role": "user",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 1485,
+        "total_tokens": 1829,
+        "completion_tokens": 344,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024,
+          "text_tokens": 1485
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 235,
+          "text_tokens": 344
+        }
+      }
+    },
+    {
+      "ordinal": 13,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 8332,
+        "total_tokens": 8606,
+        "completion_tokens": 274,
+        "prompt_tokens_details": {
+          "cached_tokens": 7424,
+          "text_tokens": 8332
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 147,
+          "text_tokens": 274
+        }
+      }
+    },
+    {
+      "ordinal": 14,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 9046,
+        "total_tokens": 9285,
+        "completion_tokens": 239,
+        "prompt_tokens_details": {
+          "cached_tokens": 8064,
+          "text_tokens": 9046
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 57,
+          "text_tokens": 239
+        }
+      }
+    },
+    {
+      "ordinal": 15,
+      "role": "user",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 1784,
+        "total_tokens": 2247,
+        "completion_tokens": 463,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024,
+          "text_tokens": 1784
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 307,
+          "text_tokens": 463
+        }
+      }
+    },
+    {
+      "ordinal": 16,
+      "role": "agent",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 9384,
+        "total_tokens": 9998,
+        "completion_tokens": 614,
+        "prompt_tokens_details": {
+          "cached_tokens": 8064,
+          "text_tokens": 9384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 316,
+          "text_tokens": 614
+        }
+      }
+    },
+    {
+      "ordinal": 17,
+      "role": "user",
+      "http_status": 200,
+      "usage": {
+        "prompt_tokens": 2246,
+        "total_tokens": 2557,
+        "completion_tokens": 311,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024,
+          "text_tokens": 2246
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 148,
+          "text_tokens": 311
+        }
+      }
+    }
+  ]
+}

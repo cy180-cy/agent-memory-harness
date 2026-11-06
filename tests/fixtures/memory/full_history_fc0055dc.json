@@ -1,0 +1,2094 @@
+{
+  "head": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
+  "llm_agent_git_blob": "652974ff98edb652c582453687977cff1742b7bd",
+  "llm_agent_source_sha256": "d4bbd03fc1b395ac206a96bae126d3e61b9ca292b315fcd5cc4ca5528be1eeb7",
+  "scenario_source_sha256": "c00996ea8bd1775c7ccaa381cd26d2cde832c0b2e2fa0815c945213323065a7c",
+  "versions": {
+    "tau2": "1.0.1",
+    "litellm": "1.82.6",
+    "httpx": "0.28.1",
+    "openai": "3.24.0"
+  },
+  "cases": {
+    "empty_history": {
+      "initialized": {
+        "system_messages": [
+          {
+            "role": "system",
+            "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+          }
+        ],
+        "messages": [],
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "echo_value",
+              "description": "Echo a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to echo.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          },
+          {
+            "type": "function",
+            "function": {
+              "name": "upper_value",
+              "description": "Uppercase a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to uppercase.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          }
+        ]
+      },
+      "generate_requests": [
+        {
+          "model": "openai/qwen3.7-plus",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "call_name": "agent_response",
+          "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+          "temperature": 0.0,
+          "max_completion_tokens": 1024,
+          "timeout": 30.0,
+          "num_retries": 0,
+          "max_retries": 0,
+          "drop_params": false,
+          "stream": false,
+          "tool_choice": "auto"
+        }
+      ],
+      "http_requests": [
+        {
+          "model": "qwen3.7-plus",
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "max_completion_tokens": 1024,
+          "temperature": 0.0,
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "final_messages": [
+        {
+          "role": "user",
+          "content": "new visible request"
+        },
+        {
+          "role": "assistant",
+          "content": "answer empty_history",
+          "tool_calls": null
+        }
+      ],
+      "tool_executions": [],
+      "request_count": 1
+    },
+    "initial_history": {
+      "initialized": {
+        "system_messages": [
+          {
+            "role": "system",
+            "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+          }
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "content": "prior user"
+          },
+          {
+            "role": "assistant",
+            "content": "prior assistant",
+            "tool_calls": null
+          }
+        ],
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "echo_value",
+              "description": "Echo a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to echo.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          },
+          {
+            "type": "function",
+            "function": {
+              "name": "upper_value",
+              "description": "Uppercase a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to uppercase.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          }
+        ]
+      },
+      "generate_requests": [
+        {
+          "model": "openai/qwen3.7-plus",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "prior user"
+            },
+            {
+              "role": "assistant",
+              "content": "prior assistant",
+              "tool_calls": null
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "call_name": "agent_response",
+          "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+          "temperature": 0.0,
+          "max_completion_tokens": 1024,
+          "timeout": 30.0,
+          "num_retries": 0,
+          "max_retries": 0,
+          "drop_params": false,
+          "stream": false,
+          "tool_choice": "auto"
+        }
+      ],
+      "http_requests": [
+        {
+          "model": "qwen3.7-plus",
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "prior user"
+            },
+            {
+              "role": "assistant",
+              "content": "prior assistant"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "max_completion_tokens": 1024,
+          "temperature": 0.0,
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "final_messages": [
+        {
+          "role": "user",
+          "content": "prior user"
+        },
+        {
+          "role": "assistant",
+          "content": "prior assistant",
+          "tool_calls": null
+        },
+        {
+          "role": "user",
+          "content": "new visible request"
+        },
+        {
+          "role": "assistant",
+          "content": "answer initial_history",
+          "tool_calls": null
+        }
+      ],
+      "tool_executions": [],
+      "request_count": 1
+    },
+    "dialogue": {
+      "initialized": {
+        "system_messages": [
+          {
+            "role": "system",
+            "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+          }
+        ],
+        "messages": [],
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "echo_value",
+              "description": "Echo a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to echo.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          },
+          {
+            "type": "function",
+            "function": {
+              "name": "upper_value",
+              "description": "Uppercase a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to uppercase.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          }
+        ]
+      },
+      "generate_requests": [
+        {
+          "model": "openai/qwen3.7-plus",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "call_name": "agent_response",
+          "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+          "temperature": 0.0,
+          "max_completion_tokens": 1024,
+          "timeout": 30.0,
+          "num_retries": 0,
+          "max_retries": 0,
+          "drop_params": false,
+          "stream": false,
+          "tool_choice": "auto"
+        },
+        {
+          "model": "openai/qwen3.7-plus",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            },
+            {
+              "role": "assistant",
+              "content": "first answer",
+              "tool_calls": null
+            },
+            {
+              "role": "user",
+              "content": "second visible request"
+            }
+          ],
+          "call_name": "agent_response",
+          "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+          "temperature": 0.0,
+          "max_completion_tokens": 1024,
+          "timeout": 30.0,
+          "num_retries": 0,
+          "max_retries": 0,
+          "drop_params": false,
+          "stream": false,
+          "tool_choice": "auto"
+        },
+        {
+          "model": "openai/qwen3.7-plus",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            },
+            {
+              "role": "assistant",
+              "content": "first answer",
+              "tool_calls": null
+            },
+            {
+              "role": "user",
+              "content": "second visible request"
+            },
+            {
+              "role": "assistant",
+              "content": "second answer",
+              "tool_calls": null
+            },
+            {
+              "role": "user",
+              "content": "third visible request"
+            }
+          ],
+          "call_name": "agent_response",
+          "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+          "temperature": 0.0,
+          "max_completion_tokens": 1024,
+          "timeout": 30.0,
+          "num_retries": 0,
+          "max_retries": 0,
+          "drop_params": false,
+          "stream": false,
+          "tool_choice": "auto"
+        }
+      ],
+      "http_requests": [
+        {
+          "model": "qwen3.7-plus",
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "max_completion_tokens": 1024,
+          "temperature": 0.0,
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "model": "qwen3.7-plus",
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            },
+            {
+              "role": "assistant",
+              "content": "first answer"
+            },
+            {
+              "role": "user",
+              "content": "second visible request"
+            }
+          ],
+          "max_completion_tokens": 1024,
+          "temperature": 0.0,
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "model": "qwen3.7-plus",
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            },
+            {
+              "role": "assistant",
+              "content": "first answer"
+            },
+            {
+              "role": "user",
+              "content": "second visible request"
+            },
+            {
+              "role": "assistant",
+              "content": "second answer"
+            },
+            {
+              "role": "user",
+              "content": "third visible request"
+            }
+          ],
+          "max_completion_tokens": 1024,
+          "temperature": 0.0,
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "final_messages": [
+        {
+          "role": "user",
+          "content": "new visible request"
+        },
+        {
+          "role": "assistant",
+          "content": "first answer",
+          "tool_calls": null
+        },
+        {
+          "role": "user",
+          "content": "second visible request"
+        },
+        {
+          "role": "assistant",
+          "content": "second answer",
+          "tool_calls": null
+        },
+        {
+          "role": "user",
+          "content": "third visible request"
+        },
+        {
+          "role": "assistant",
+          "content": "third answer",
+          "tool_calls": null
+        }
+      ],
+      "tool_executions": [],
+      "request_count": 3
+    },
+    "single_tool": {
+      "initialized": {
+        "system_messages": [
+          {
+            "role": "system",
+            "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+          }
+        ],
+        "messages": [],
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "echo_value",
+              "description": "Echo a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to echo.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          },
+          {
+            "type": "function",
+            "function": {
+              "name": "upper_value",
+              "description": "Uppercase a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to uppercase.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          }
+        ]
+      },
+      "generate_requests": [
+        {
+          "model": "openai/qwen3.7-plus",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "call_name": "agent_response",
+          "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+          "temperature": 0.0,
+          "max_completion_tokens": 1024,
+          "timeout": 30.0,
+          "num_retries": 0,
+          "max_retries": 0,
+          "drop_params": false,
+          "stream": false,
+          "tool_choice": "auto"
+        },
+        {
+          "model": "openai/qwen3.7-plus",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            },
+            {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "single-call",
+                  "name": "echo_value",
+                  "function": {
+                    "name": "echo_value",
+                    "arguments": "{\"value\": \"alpha\"}"
+                  },
+                  "type": "function"
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "alpha",
+              "tool_call_id": "single-call"
+            }
+          ],
+          "call_name": "agent_response",
+          "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+          "temperature": 0.0,
+          "max_completion_tokens": 1024,
+          "timeout": 30.0,
+          "num_retries": 0,
+          "max_retries": 0,
+          "drop_params": false,
+          "stream": false,
+          "tool_choice": "auto"
+        }
+      ],
+      "http_requests": [
+        {
+          "model": "qwen3.7-plus",
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "max_completion_tokens": 1024,
+          "temperature": 0.0,
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "model": "qwen3.7-plus",
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            },
+            {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "single-call",
+                  "name": "echo_value",
+                  "function": {
+                    "name": "echo_value",
+                    "arguments": "{\"value\": \"alpha\"}"
+                  },
+                  "type": "function"
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "alpha",
+              "tool_call_id": "single-call"
+            }
+          ],
+          "max_completion_tokens": 1024,
+          "temperature": 0.0,
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "final_messages": [
+        {
+          "role": "user",
+          "content": "new visible request"
+        },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "id": "single-call",
+              "name": "echo_value",
+              "function": {
+                "name": "echo_value",
+                "arguments": "{\"value\": \"alpha\"}"
+              },
+              "type": "function"
+            }
+          ]
+        },
+        {
+          "role": "tool",
+          "content": "alpha",
+          "tool_call_id": "single-call"
+        },
+        {
+          "role": "assistant",
+          "content": "tool finished",
+          "tool_calls": null
+        }
+      ],
+      "tool_executions": [
+        [
+          "echo_value",
+          "alpha"
+        ]
+      ],
+      "request_count": 2
+    },
+    "multi_tool": {
+      "initialized": {
+        "system_messages": [
+          {
+            "role": "system",
+            "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+          }
+        ],
+        "messages": [],
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "echo_value",
+              "description": "Echo a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to echo.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          },
+          {
+            "type": "function",
+            "function": {
+              "name": "upper_value",
+              "description": "Uppercase a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to uppercase.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          }
+        ]
+      },
+      "generate_requests": [
+        {
+          "model": "openai/qwen3.7-plus",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "call_name": "agent_response",
+          "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+          "temperature": 0.0,
+          "max_completion_tokens": 1024,
+          "timeout": 30.0,
+          "num_retries": 0,
+          "max_retries": 0,
+          "drop_params": false,
+          "stream": false,
+          "tool_choice": "auto"
+        },
+        {
+          "model": "openai/qwen3.7-plus",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            },
+            {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "multi-first",
+                  "name": "echo_value",
+                  "function": {
+                    "name": "echo_value",
+                    "arguments": "{\"value\": \"alpha\"}"
+                  },
+                  "type": "function"
+                },
+                {
+                  "id": "multi-second",
+                  "name": "upper_value",
+                  "function": {
+                    "name": "upper_value",
+                    "arguments": "{\"value\": \"beta\"}"
+                  },
+                  "type": "function"
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "alpha",
+              "tool_call_id": "multi-first"
+            },
+            {
+              "role": "tool",
+              "content": "BETA",
+              "tool_call_id": "multi-second"
+            }
+          ],
+          "call_name": "agent_response",
+          "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+          "temperature": 0.0,
+          "max_completion_tokens": 1024,
+          "timeout": 30.0,
+          "num_retries": 0,
+          "max_retries": 0,
+          "drop_params": false,
+          "stream": false,
+          "tool_choice": "auto"
+        }
+      ],
+      "http_requests": [
+        {
+          "model": "qwen3.7-plus",
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "max_completion_tokens": 1024,
+          "temperature": 0.0,
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "model": "qwen3.7-plus",
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            },
+            {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "multi-first",
+                  "name": "echo_value",
+                  "function": {
+                    "name": "echo_value",
+                    "arguments": "{\"value\": \"alpha\"}"
+                  },
+                  "type": "function"
+                },
+                {
+                  "id": "multi-second",
+                  "name": "upper_value",
+                  "function": {
+                    "name": "upper_value",
+                    "arguments": "{\"value\": \"beta\"}"
+                  },
+                  "type": "function"
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "alpha",
+              "tool_call_id": "multi-first"
+            },
+            {
+              "role": "tool",
+              "content": "BETA",
+              "tool_call_id": "multi-second"
+            }
+          ],
+          "max_completion_tokens": 1024,
+          "temperature": 0.0,
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "final_messages": [
+        {
+          "role": "user",
+          "content": "new visible request"
+        },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "id": "multi-first",
+              "name": "echo_value",
+              "function": {
+                "name": "echo_value",
+                "arguments": "{\"value\": \"alpha\"}"
+              },
+              "type": "function"
+            },
+            {
+              "id": "multi-second",
+              "name": "upper_value",
+              "function": {
+                "name": "upper_value",
+                "arguments": "{\"value\": \"beta\"}"
+              },
+              "type": "function"
+            }
+          ]
+        },
+        {
+          "role": "tool",
+          "content": "alpha",
+          "tool_call_id": "multi-first"
+        },
+        {
+          "role": "tool",
+          "content": "BETA",
+          "tool_call_id": "multi-second"
+        },
+        {
+          "role": "assistant",
+          "content": "both tools finished",
+          "tool_calls": null
+        }
+      ],
+      "tool_executions": [
+        [
+          "echo_value",
+          "alpha"
+        ],
+        [
+          "upper_value",
+          "beta"
+        ]
+      ],
+      "request_count": 2
+    },
+    "initial_tool_history": {
+      "initialized": {
+        "system_messages": [
+          {
+            "role": "system",
+            "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+          }
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "content": "prior tool request"
+          },
+          {
+            "role": "assistant",
+            "content": "",
+            "tool_calls": [
+              {
+                "id": "history-call",
+                "name": "echo_value",
+                "function": {
+                  "name": "echo_value",
+                  "arguments": "{\"value\": \"seed\"}"
+                },
+                "type": "function"
+              }
+            ]
+          },
+          {
+            "role": "tool",
+            "content": "seed",
+            "tool_call_id": "history-call"
+          }
+        ],
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "echo_value",
+              "description": "Echo a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to echo.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          },
+          {
+            "type": "function",
+            "function": {
+              "name": "upper_value",
+              "description": "Uppercase a value in memory.",
+              "parameters": {
+                "properties": {
+                  "value": {
+                    "description": "Value to uppercase.",
+                    "title": "Value",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "title": "parameters",
+                "type": "object"
+              }
+            }
+          }
+        ]
+      },
+      "generate_requests": [
+        {
+          "model": "openai/qwen3.7-plus",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "prior tool request"
+            },
+            {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "history-call",
+                  "name": "echo_value",
+                  "function": {
+                    "name": "echo_value",
+                    "arguments": "{\"value\": \"seed\"}"
+                  },
+                  "type": "function"
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "seed",
+              "tool_call_id": "history-call"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "call_name": "agent_response",
+          "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+          "temperature": 0.0,
+          "max_completion_tokens": 1024,
+          "timeout": 30.0,
+          "num_retries": 0,
+          "max_retries": 0,
+          "drop_params": false,
+          "stream": false,
+          "tool_choice": "auto"
+        }
+      ],
+      "http_requests": [
+        {
+          "model": "qwen3.7-plus",
+          "messages": [
+            {
+              "role": "system",
+              "content": "<instructions>\nYou are a customer service agent that helps the user according to the <policy> provided below.\nIn each turn you can either:\n- Send a message to the user.\n- Make a tool call.\nYou cannot do both at the same time.\n\nTry to be helpful and always follow the policy. Always make sure you generate valid JSON only.\n</instructions>\n<policy>\nOnly echo or uppercase the supplied value. Preserve this policy.\n</policy>"
+            },
+            {
+              "role": "user",
+              "content": "prior tool request"
+            },
+            {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "id": "history-call",
+                  "name": "echo_value",
+                  "function": {
+                    "name": "echo_value",
+                    "arguments": "{\"value\": \"seed\"}"
+                  },
+                  "type": "function"
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "seed",
+              "tool_call_id": "history-call"
+            },
+            {
+              "role": "user",
+              "content": "new visible request"
+            }
+          ],
+          "max_completion_tokens": 1024,
+          "temperature": 0.0,
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "echo_value",
+                "description": "Echo a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to echo.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "upper_value",
+                "description": "Uppercase a value in memory.",
+                "parameters": {
+                  "properties": {
+                    "value": {
+                      "description": "Value to uppercase.",
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "title": "parameters",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "final_messages": [
+        {
+          "role": "user",
+          "content": "prior tool request"
+        },
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "id": "history-call",
+              "name": "echo_value",
+              "function": {
+                "name": "echo_value",
+                "arguments": "{\"value\": \"seed\"}"
+              },
+              "type": "function"
+            }
+          ]
+        },
+        {
+          "role": "tool",
+          "content": "seed",
+          "tool_call_id": "history-call"
+        },
+        {
+          "role": "user",
+          "content": "new visible request"
+        },
+        {
+          "role": "assistant",
+          "content": "answer initial_tool_history",
+          "tool_calls": null
+        }
+      ],
+      "tool_executions": [],
+      "request_count": 1
+    }
+  }
+}

@@ -1,0 +1,298 @@
+{
+  "source_kind": "captured_allowlisted_excerpt",
+  "source_run": "20261103T1022124442166+0800",
+  "original_file_sha256": {
+    "request_ledger.json": "8136df197f294b14e66883e52cfd4dd2e6f59f27222ed7646bcd764f5c666f18",
+    "simulation.json": "cf58d4eb5d0928f415013fd7fcafa7fceacd58b639d1d1a7342a38e6a6d55a10",
+    "runtime_fingerprint.json": "e487275745334e31360658ff990924f4fd9b5f72c42b1ef768577d5fbacd8386",
+    "model_responses.json": "ab15be6df787993ad5f4cccd3505aeaebd7ffaadc01952cb1b777636af22e2ef"
+  },
+  "data_files": {
+    "data/tau2/domains/retail/db.json": "dbde692e380bb4ad17f9f7841172cf1e69bebad2daa405628ccdc52a42b3b9b0",
+    "data/tau2/domains/retail/tasks.json": "f44563d8f36362e2dc58282bb02cfb85010d22f27d9439808758d3e9b2bc16d2",
+    "data/tau2/domains/retail/policy.md": "4313d3fef8acf919f555fa17fbce929cc3ed1cef2dd8f0d35ff5c8c3364de176",
+    "data/tau2/domains/retail/split_tasks.json": "5f9949b833e6b99584b87e84ef22f9d81789ea67a52e534c6f7aa91eff08adc7"
+  },
+  "retained": "Agent-visible captured inputs, visible trajectory, protocol reply fields. Public benchmark fictional entities; no User system scenario, authorization, response IDs, headers or credentials. Mock response IDs/created are synthetic; tool IDs remain for linkage.",
+  "usage_evidence": [
+    {
+      "role": "user",
+      "usage": {
+        "prompt_tokens": 557,
+        "total_tokens": 758,
+        "completion_tokens": 201,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 557
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 146,
+          "text_tokens": 201
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 5142,
+        "total_tokens": 5246,
+        "completion_tokens": 104,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 5142
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 53,
+          "text_tokens": 104
+        }
+      }
+    },
+    {
+      "role": "user",
+      "usage": {
+        "prompt_tokens": 671,
+        "total_tokens": 823,
+        "completion_tokens": 152,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 671
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 75,
+          "text_tokens": 152
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 5274,
+        "total_tokens": 5394,
+        "completion_tokens": 120,
+        "prompt_tokens_details": {
+          "cached_tokens": 4608,
+          "text_tokens": 5274
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 56,
+          "text_tokens": 120
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 5362,
+        "total_tokens": 5429,
+        "completion_tokens": 67,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5362
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 30,
+          "text_tokens": 67
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 5587,
+        "total_tokens": 5671,
+        "completion_tokens": 84,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5587
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 46,
+          "text_tokens": 84
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 6212,
+        "total_tokens": 6666,
+        "completion_tokens": 454,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 6212
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 416,
+          "text_tokens": 454
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 6864,
+        "total_tokens": 7035,
+        "completion_tokens": 171,
+        "prompt_tokens_details": {
+          "cached_tokens": 5760,
+          "text_tokens": 6864
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 133,
+          "text_tokens": 171
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 7514,
+        "total_tokens": 8747,
+        "completion_tokens": 1233,
+        "prompt_tokens_details": {
+          "cached_tokens": 6272,
+          "text_tokens": 7514
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 902,
+          "text_tokens": 1233
+        }
+      }
+    },
+    {
+      "role": "user",
+      "usage": {
+        "prompt_tokens": 1087,
+        "total_tokens": 1340,
+        "completion_tokens": 253,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 1087
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 104,
+          "text_tokens": 253
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 7978,
+        "total_tokens": 8491,
+        "completion_tokens": 513,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 7978
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 272,
+          "text_tokens": 513
+        }
+      }
+    },
+    {
+      "role": "user",
+      "usage": {
+        "prompt_tokens": 1485,
+        "total_tokens": 1829,
+        "completion_tokens": 344,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024,
+          "text_tokens": 1485
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 235,
+          "text_tokens": 344
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 8332,
+        "total_tokens": 8606,
+        "completion_tokens": 274,
+        "prompt_tokens_details": {
+          "cached_tokens": 7424,
+          "text_tokens": 8332
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 147,
+          "text_tokens": 274
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 9046,
+        "total_tokens": 9285,
+        "completion_tokens": 239,
+        "prompt_tokens_details": {
+          "cached_tokens": 8064,
+          "text_tokens": 9046
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 57,
+          "text_tokens": 239
+        }
+      }
+    },
+    {
+      "role": "user",
+      "usage": {
+        "prompt_tokens": 1784,
+        "total_tokens": 2247,
+        "completion_tokens": 463,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024,
+          "text_tokens": 1784
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 307,
+          "text_tokens": 463
+        }
+      }
+    },
+    {
+      "role": "agent",
+      "usage": {
+        "prompt_tokens": 9384,
+        "total_tokens": 9998,
+        "completion_tokens": 614,
+        "prompt_tokens_details": {
+          "cached_tokens": 8064,
+          "text_tokens": 9384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 316,
+          "text_tokens": 614
+        }
+      }
+    },
+    {
+      "role": "user",
+      "usage": {
+        "prompt_tokens": 2246,
+        "total_tokens": 2557,
+        "completion_tokens": 311,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024,
+          "text_tokens": 2246
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 148,
+          "text_tokens": 311
+        }
+      }
+    }
+  ],
+  "portable_data_files": {
+    "data/tau2/domains/retail/db.json": "413a65160adbdb5fde0ffc0015c49b6d70250b10c18128de169b597af7766765",
+    "data/tau2/domains/retail/tasks.json": "8e03ebce7901bd6218e7a7dc3105faa9324091a68058f7fe61c65262868812e8",
+    "data/tau2/domains/retail/policy.md": "2c9652afbce57d6e087768d37cda64d31c53d50b3e3225cfdb791bac66466467",
+    "data/tau2/domains/retail/split_tasks.json": "ed0580ec52575b63fbf76568af42490da6ee7783ecb4aa81af46961291358f20"
+  },
+  "portable_data_hash_format": "sha256 after CRLF to LF normalization; original raw-byte data_files preserved"
+}

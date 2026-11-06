@@ -1,0 +1,43 @@
+{
+  "user512": {
+    "source_kind": "historical_status_excerpt_not_authorization",
+    "source_sha256": "ce66621742f2d3913be6aa8bae8d1db632d92e3cabf615f5f85e2f9d7f7a370a",
+    "status": "consumed_stopped_after_A",
+    "may_restart_or_resume": false,
+    "actual_requests": 12,
+    "attempt_groups": [
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A"
+    ],
+    "B_actually_executed": false
+  },
+  "agent1024": {
+    "source_kind": "historical_status_excerpt_not_authorization",
+    "source_sha256": "e3b0bde340e72a963e7dca325b6ae5a2c56bbd14af0701dd69085bb5ebd789d0",
+    "status": "consumed_stopped_after_A",
+    "may_restart_or_resume": false,
+    "actual_requests": 9,
+    "attempt_groups": [
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A"
+    ],
+    "B_actually_executed": false
+  }
+}
