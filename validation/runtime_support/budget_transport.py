@@ -10,7 +10,7 @@ PROXY: str
 class CountedTransport:
     """Construct an HTTPX transport with the Phase0-05 pre-dispatch SDK checks."""
     @staticmethod
-    def create(inner, *, safety, max_requests, caps, live=False, persist=None, secret="", budget_session=None):
+    def create(inner, *, safety, max_requests, caps, live=False, persist=None, secret="", budget_session=None, reserve_cost=None):
         import httpx
         require(isinstance(inner, httpx.MockTransport) if not live else safety.live_authorized and isinstance(inner, httpx.HTTPTransport), "Unapproved transport")
 
@@ -58,6 +58,8 @@ class CountedTransport:
                     self.blocked.append({"reason": str(error), "role": self.role})
                     self.save()
                     raise
+                if reserve_cost is not None:
+                    reserve_cost(len(self.events) + 1, self.role, body)
                 # Reserve and persist BEFORE I/O; uncertainty and errors keep their slot.
                 event = {"ordinal": len(self.events) + 1, "role": self.role,
                          "endpoint": str(request.url), "parameters": adapter.redact(body, secret),

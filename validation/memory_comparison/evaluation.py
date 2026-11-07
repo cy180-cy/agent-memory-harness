@@ -73,7 +73,7 @@ def task_manifest(task_ids=tuple(TASKS)):
             "limitations": "探索性便利样本，每策略每任务一次；不支持稳定成功率或统计显著性结论"}
 
 
-def make_suite(comparison_id, repo, manifest):
+def make_suite(comparison_id, repo, manifest, *, phase1_07=False):
     """Freeze three strategies per task, without introducing a second client."""
     from tau2.runner.build import build_environment
     calibration = {"selection": {"recommended_max_input_tokens": 7168, "safety_margin_tokens": 128},
@@ -99,6 +99,11 @@ def make_suite(comparison_id, repo, manifest):
             "task_manifest": manifest, "budget_target_cny": None, "price_status": "unknown",
             "currency_hard_cap": False, "authorization_status": "pending_not_approved",
             "live_executed": False, "trial_count": 1, "retry_policy": "no_retries_or_resume"}
+    if phase1_07:
+        from .fees import PRICE_POLICY
+        plan.update(currency_policy=deepcopy(PRICE_POLICY), budget_target_cny=10,
+                    price_status="user_quoted", continuation_policy="structured-context-only-v1",
+                    authorization_id="AMH-PHASE1-07-RETAIL69-73-93-01")
     validate_suite(plan)
     plan["identity_sha256"] = spec.digest(plan)
     return plan
@@ -108,6 +113,11 @@ def validate_suite(plan):
     """Keep pair defaults intact; check all effective non-strategy conditions."""
     if plan.get("schema") != "memory-suite-v1" or plan.get("trial_count") != 1:
         raise ValueError("Unknown suite schema or repetition count")
+    if "currency_policy" in plan or "continuation_policy" in plan:
+        from .fees import PRICE_POLICY
+        if (plan.get("currency_policy") != PRICE_POLICY or plan.get("budget_target_cny") != 10
+                or plan.get("continuation_policy") != "structured-context-only-v1"):
+            raise ValueError("Unknown price/reservation/continuation policy")
     manifest = plan["task_manifest"]
     ids = manifest["task_ids"]
     if not ids or len(ids) != len(set(ids)) or not set(ids) <= TASKS.keys():
@@ -181,8 +191,12 @@ def run_suite(plan, folder, safety, *, frames_by_group=None, live=False, secret=
     if live:
         spec.require_authorization(plan, authorization)
     total = plan["groups"][0]["limits"]["comparison_requests"]
-    ledger = spec.RequestLedger(folder, plan["identity_sha256"], total=total, mode="live" if live else "mock")
+    local_groups = [g["group"] for g in plan["groups"] if g["memory"]["name"] == "structured_memory"] if plan.get("continuation_policy") == "structured-context-only-v1" else []
+    ledger = spec.RequestLedger(folder, plan["identity_sha256"], total=total, mode="live" if live else "mock", local_context_groups=local_groups)
     ledger.start_once()
+    if "currency_policy" in plan:
+        from .fees import FeeBudget
+        ledger.fees = FeeBudget(ledger, plan["currency_policy"])
     spec.write_new(folder / "effective_plan.json", plan)
     rows, gates, completed, errors = [], [], [], []
     stop = None
@@ -214,7 +228,12 @@ def run_suite(plan, folder, safety, *, frames_by_group=None, live=False, secret=
                 if durable != ledger.data or raised:
                     raise RuntimeError("Execution journal not verified")
                 gate = execution.evaluate_a_to_b(value, plan, durable, folder,
-                                                  group_id=name, completed_prefix=completed)
+                                                  group_id=name, completed_prefix=completed,
+                                                  allow_local_context_stop=name in local_groups)
+                if ledger.fees is not None:
+                    totals = ledger.fees.totals()
+                    if totals["unknown_attempts"] or totals["pending_attempts"] or ledger.fees.data["stop_reason"]:
+                        gate.update(allowed=False, primary_reason=ledger.fees.data["stop_reason"] or "cost_verification_unknown")
                 gate.update(from_group=name, to_group=plan["groups"][index + 1]["group"])
                 ledger.record_gate(gate, key="gate_" + str(index + 1))
             except (OSError, ValueError, RuntimeError, TypeError) as error:

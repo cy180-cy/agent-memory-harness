@@ -37,7 +37,36 @@ def live_preflight(plan, authorization, folder, repo, key_reader, *, mode="live"
         raise PermissionError("Tracked patch identity changed; no Key read")
     if (folder/"execution_started.lock").exists():
         raise PermissionError("Comparison authorization already consumed; no Key read")
+    if plan.get("authorization_id"):
+        from memory_comparison.spec import write_new
+        ident = plan["authorization_id"]
+        if not isinstance(ident, str) or not ident.replace("-", "").isalnum():
+            raise PermissionError("Invalid authorization ID; no Key read")
+        bindings = ROOT/"validation/phase1_comparison/authorization_bindings"
+        bindings.mkdir(exist_ok=True)
+        # Exclusive creation binds the ID across all run directories/processes.
+        write_new(bindings/(ident+".json"), {"authorization_id":ident,
+            "comparison_id":plan["comparison_id"], "identity_sha256":plan["identity_sha256"],
+            "status":"claimed_no_automatic_resume", "plan_folder":str(folder.parent)})
     return auth,key_reader("AMH_QIANWEN_API_KEY")
+
+
+def read_project_key(name):
+    """Read only the project's named process/current-user variable, after approval."""
+    if name != "AMH_QIANWEN_API_KEY":
+        raise PermissionError("Unexpected credential name")
+    value = os.environ.get(name)
+    if value:
+        return value
+    if os.name == "nt":
+        import winreg
+        try:
+            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment") as key:
+                value, kind = winreg.QueryValueEx(key, name)
+            return value if kind in (winreg.REG_SZ, winreg.REG_EXPAND_SZ) and isinstance(value, str) else None
+        except FileNotFoundError:
+            return None
+    return None
 
 
 def main():
@@ -50,6 +79,7 @@ def main():
     modes.add_argument("--export", dest="export_paths", type=Path, nargs="+", help="Export saved runs to CSV/JSON/Chinese Markdown; no model calls")
     modes.add_argument("--demo", type=Path, help="Read-only Chinese CLI replay of saved results")
     parser.add_argument("--suite", action="store_true", help="Prepare or Mock the fixed three-strategy Retail matrix; old A/B default is retained")
+    parser.add_argument("--phase1-07", action="store_true", help="Prepare the approved task scope with CNY reservations; does not authorize live execution")
     parser.add_argument("--task-ids", nargs="+", help="With --suite, subset of fixed train tasks 34 69 73 93")
     parser.add_argument("--task", help="Task ID to display with --demo (defaults to first saved task)")
     parser.add_argument("--plan",type=Path)
@@ -57,8 +87,10 @@ def main():
     parser.add_argument("--gate-only",action="store_true",help="With --tests, run only A-to-B gate tests")
     parser.add_argument("--user-output-only",action="store_true",help="With --tests, run the User output profile regressions only")
     parser.add_argument("--runtime-fix-only",action="store_true",help="With --tests, run mode and thinking-budget regressions only")
-    parser.add_argument("--development-tests",choices=("ledger","structured","evaluation","portable"),help="With --tests, run only the selected development tests")
+    parser.add_argument("--development-tests",choices=("ledger","structured","evaluation","portable","fees"),help="With --tests, run only the selected development tests")
     args = parser.parse_args()
+    if args.phase1_07 and (not args.suite or args.execute or args.task_ids != ["69", "73", "93"]):
+        parser.error("--phase1-07 requires offline --suite --task-ids 69 73 93")
     if args.task_ids and (not args.suite or args.execute):
         parser.error("--task-ids requires offline --suite preparation; execute uses the frozen plan")
     if args.task and args.demo is None:
@@ -111,7 +143,7 @@ def main():
         plan = read_json(args.plan)
         out = args.plan.resolve().parent / "live_execution"
         auth,secret = live_preflight(plan,args.authorization,out,repo,
-            lambda name:os.environ.get(name))
+            read_project_key)
         if not secret or not secret.strip():
             raise RuntimeError("Missing private process credential; no request sent")
         out.mkdir(exist_ok=True)
@@ -152,6 +184,7 @@ def main():
         if args.development_tests:
             targets = [str(ROOT/{"ledger":"tests/test_ledger_persistence.py", "structured":"tests/test_structured_memory.py",
                                 "evaluation":"tests/test_memory_evaluation.py",
+                                "fees":"tests/test_suite_fees.py",
                                 "portable":"tests/test_repository_state.py"}[args.development_tests])]
             if args.development_tests == "evaluation":
                 targets += [str(ROOT/"tests/test_comparison_gate.py") + "::test_actual_run_pair_constructs_B_for_valid_reward_zero_or_one",
@@ -192,7 +225,7 @@ def main():
     if args.suite:
         from memory_comparison.evaluation import task_manifest, make_suite, validate_suite, run_suite
         manifest = task_manifest() if args.task_ids is None else task_manifest(args.task_ids)
-        plan = make_suite(out.name, repo, manifest)
+        plan = make_suite(out.name, repo, manifest, phase1_07=args.phase1_07)
         write_new(out/"task_manifest.json",manifest)
         write_new(out/"comparison_plan.json",plan)
         checks = []
@@ -202,7 +235,8 @@ def main():
                            "strategy":orch.agent.memory_strategy.name, "user":type(orch.user).__name__})
         write_new(out/"preparation_summary.json", {"mode":"offline_preparation", "real_api_requests":0,
             "configuration_check":validate_suite(plan), "construction_checks":checks,
-            "paid_authorization_created":False, "budget_target_cny":None, "price_status":"unknown"})
+            "paid_authorization_created":False, "budget_target_cny":plan["budget_target_cny"],
+            "price_status":plan["price_status"]})
         write_new(out/"tracked_patch.diff.json", {"diff":repo["tracked_patch"]})
         if args.mock:
             execution = out/"mock_execution"

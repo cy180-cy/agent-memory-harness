@@ -269,6 +269,9 @@ def require_authorization(plan, authorization, *, mode="live"):
     if authorization is None:
         raise PermissionError("New comparison-bound paid authorization required; no Key read")
     auth = read_json(authorization)
+    if "currency_policy" in plan and (auth.get("budget_target_cny") != 10 or
+            auth.get("authorization_id") != plan.get("authorization_id")):
+        raise PermissionError("Currency scope or authorization ID mismatch; no Key read")
     if (auth.get("approved") is not True or auth.get("phase") != "Phase1-memory-comparison-live"
             or auth.get("comparison_id") != plan["comparison_id"]
             or auth.get("identity_sha256") != plan["identity_sha256"]
@@ -288,20 +291,26 @@ class RequestLimitStop(RuntimeError):
 class RequestLedger:
     """Reopen counts without resetting; each execution may be started only once."""
 
-    def __init__(self, folder, identity, *, per_group=20, total=40, mode="mock"):
+    def __init__(self, folder, identity, *, per_group=20, total=40, mode="mock", local_context_groups=()):
         mode = normalize_mode(mode)
         self.folder = Path(folder)
         self.folder.mkdir(parents=True,exist_ok=True)
         self.path = self.folder / "comparison_request_ledger.json"
         self.identity = identity
         self.last_refusal = None
+        self.fees = None
+        self.local_context_groups = tuple(local_context_groups)
         if self.path.exists():
             self.data = read_json(self.path)
             if (self.data["identity"],self.data["per_group"],self.data["total"],normalize_mode(self.data["mode"])) != (identity,per_group,total,mode):
                 raise ValueError("Cannot reset or rebind an existing ledger")
+            if self.data.get("local_context_groups", []) != list(local_context_groups):
+                raise ValueError("Cannot change the recorded continuation policy")
         else:
             self.data = {"identity":identity,"per_group":per_group,"total":total,
                 "mode":mode,"attempts":[],"groups":{},"shared_stop":None}
+            if local_context_groups:
+                self.data["local_context_groups"] = list(local_context_groups)
             write_new(self.path,self.data)
 
     def start_once(self):
@@ -322,6 +331,8 @@ class RequestLedger:
             "latest_attempt": {k: latest.get(k) for k in ("group", "ordinal", "role", "status", "http_status")},
             "groups": {g: {k: v.get(k) for k in ("status", "requests", "official_reward", "stop_reason")}
                        for g, v in self.data["groups"].items()}}
+        if self.fees is not None:
+            snapshot["currency_budget"] = self.fees.totals()
         atomic_json(monitor / (f"{time.time_ns():020d}-" + uuid.uuid4().hex[:8] + ".json"), snapshot)
 
     def record_gate(self, decision, *, key="a_to_b_gate"):
@@ -372,6 +383,10 @@ class RequestLedger:
 
     def finish_group(self, group, result):
         self.data["groups"][group] = deepcopy(result)
-        if result.get("pause_comparison"):
+        local_stop = (group in self.local_context_groups and result.get("status") == "resource_stop"
+                      and result.get("stop_reason") == "context_budget_exceeded"
+                      and result.get("error_type") == "ContextBudgetError"
+                      and result.get("official_reward") is None)
+        if result.get("pause_comparison") and not local_stop:
             self.data["shared_stop"] = result["stop_reason"]
         self._commit()

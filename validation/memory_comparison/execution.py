@@ -16,7 +16,7 @@ from .spec import (
 )
 
 
-def completion_reasons(result, group):
+def completion_reasons(result, group, *, local_context_stop=False):
     """Positive execution-validity contract, independent of business success."""
     if not isinstance(result, dict):
         return ["A_result_missing"]
@@ -77,14 +77,25 @@ def completion_reasons(result, group):
         reasons.append("A_time_unknown")
     elif elapsed >= group["limits"]["task_timeout_seconds"]:
         reasons.append("task_timeout")
+    if local_context_stop:
+        expected = {"context_budget_exceeded", "A_not_completed", "A_termination_not_normal",
+                    "A_pause_or_error_recorded", "A_scoring_not_valid", "A_reward_unverifiable",
+                    "A_DB_result_missing", "A_trajectory_complete_not_verified", "A_artifacts_complete_not_verified"}
+        reasons = [r for r in reasons if r not in expected]
     return list(dict.fromkeys(reasons))
 
 
-def evaluate_a_to_b(result, plan, durable, folder, *, group_id="A", completed_prefix=()):
+def evaluate_a_to_b(result, plan, durable, folder, *, group_id="A", completed_prefix=(), allow_local_context_stop=False):
     """Reconcile A with persisted evidence before constructing any B resources."""
     group = next(g for g in plan["groups"] if g["group"] == group_id)
     group_folder = folder / group_id
-    reasons = completion_reasons(result, group)
+    local_stop = (allow_local_context_stop and isinstance(result, dict)
+                  and group["memory"]["name"] == "structured_memory"
+                  and result.get("status") == "resource_stop"
+                  and result.get("stop_reason") == "context_budget_exceeded"
+                  and result.get("error_type") == "ContextBudgetError"
+                  and result.get("official_reward") is None and result.get("db_result") is None)
+    reasons = completion_reasons(result, group, local_context_stop=local_stop)
     try:
         if durable["identity"] != plan["identity_sha256"]:
             reasons.append("ledger_identity_mismatch")
@@ -120,9 +131,15 @@ def evaluate_a_to_b(result, plan, durable, folder, *, group_id="A", completed_pr
             summary = group_folder / "summary.json"
             if read_json(summary) != result:
                 reasons.append("A_summary_readback_mismatch")
-            score = read_json(group_folder / "official_reward.json")
-            if score.get("reward") != result.get("official_reward") or score.get("db_check") != result.get("db_result"):
-                reasons.append("A_official_score_readback_mismatch")
+            if not local_stop:
+                score = read_json(group_folder / "official_reward.json")
+                if score.get("reward") != result.get("official_reward") or score.get("db_check") != result.get("db_result"):
+                    reasons.append("A_official_score_readback_mismatch")
+            else:
+                selections = result.get("context_selections", [])
+                if (not selections or selections[-1].get("pause_reason") != "context_budget_exceeded"
+                        or (group_folder / "official_reward.json").exists()):
+                    reasons.append("local_context_stop_not_verified")
             local = read_json(group_folder / "request_ledger.json")
             local_events = [{**e, "mode": normalize_mode(e.get("mode"))} for e in local.get("events", [])]
             expected_events = [{**{k:v for k,v in e.items() if k not in ("key","group")},
@@ -134,6 +151,8 @@ def evaluate_a_to_b(result, plan, durable, folder, *, group_id="A", completed_pr
             required = {"trajectory.json", "agent_state.json", "context_audit.json",
                         "model_responses.json", "request_ledger.json", "official_reward.json",
                         "simulation.json"}
+            if local_stop:
+                required -= {"official_reward.json", "simulation.json"}
             hashes = result.get("evidence_hashes", {})
             if (not required <= hashes.keys() or not hashes.keys() <= required | {"tool_events.json"}
                     or any(sha(group_folder / name) != h for name, h in hashes.items())):
@@ -145,7 +164,8 @@ def evaluate_a_to_b(result, plan, durable, folder, *, group_id="A", completed_pr
         "primary_reason":reasons[0] if reasons else None, "reasons":reasons,
         "A_status":result.get("status") if isinstance(result, dict) else None,
         "A_stop_reason":result.get("stop_reason") if isinstance(result, dict) else None,
-        "business_reward_is_not_the_gate":True}
+        "business_reward_is_not_the_gate":True,
+        "local_context_stop":bool(local_stop)}
 
 
 def retail_task(task_id="34", split="train"):
@@ -355,6 +375,10 @@ def _run_group(group, folder, ledger, safety, *, frames=None, live=False, secret
                 event["transport_mode"] = raw_mode
         save("request_ledger.json",value)
         ledger.sync(group["group"],value)  # Both ledgers durable BEFORE any I/O.
+        if ledger.fees is not None:
+            for event in value["events"]:
+                if event["status"] == "transport_error":
+                    ledger.fees.transport_failed(group["group"], event["ordinal"])
         progress()
 
     def handler(request):
@@ -408,6 +432,11 @@ def _run_group(group, folder, ledger, safety, *, frames=None, live=False, secret
         if target.exists():
             raise FileExistsError("Received response evidence must not be overwritten")
         atomic_json(target, adapter.redact(evidence, secret))
+        if ledger.fees is not None:
+            ledger.fees.settle(group["group"], evidence["ordinal"], transport.role,
+                               raw.get("usage"), response.status_code)
+            if ledger.fees.data["stop_reason"]:
+                session.stop_decision = {"status": ledger.fees.data["stop_reason"], "official_reward": None}
         return response
 
     inner.handle_request = capture_received_response
@@ -416,7 +445,9 @@ def _run_group(group, folder, ledger, safety, *, frames=None, live=False, secret
     budget_transport.PROXY = PROXY
     transport = budget_transport.CountedTransport.create(inner,safety=safety,
         max_requests=group["limits"]["group_requests"],caps=group_output_limits(group),live=live,
-        secret=secret or "",budget_session=session,persist=persist_transport)
+        secret=secret or "",budget_session=session,persist=persist_transport,
+        reserve_cost=None if ledger.fees is None else
+            lambda ordinal, role, body: ledger.fees.reserve(group["group"], ordinal, role, body))
     transport.deadline = started + group["limits"]["task_timeout_seconds"]
 
     def verify_output_request(request):
@@ -485,6 +516,7 @@ def _run_group(group, folder, ledger, safety, *, frames=None, live=False, secret
             reason,shared = "context_window_exceeded",False
         resource = isinstance(error,(ContextBudgetError,ResourceStop,ExecutionResourceStop)) or reason in ("request_limit_reached","task_timeout","persistent_request_limit_reached")
         resource = resource or reason == "context_window_exceeded"
+        resource = resource or str(reason).startswith("cost_")
         outcome.update(status="evaluation_error" if stage[0] == "evaluation" and not resource else
                        "resource_stop" if resource and not shared else "execution_error",
             stop_reason=reason or "shared_execution_or_protocol_error",error_type=type(error).__name__,
@@ -546,6 +578,8 @@ def _run_group(group, folder, ledger, safety, *, frames=None, live=False, secret
             "artifacts_complete":set(outcome["evidence_hashes"]) == set(required),
         }
         outcome["pause_reasons"] = completion_reasons(outcome,group)
+        if ledger.fees is not None:
+            outcome["cost"] = ledger.fees.group_record(group["group"])
         outcome["pause_comparison"] = bool(outcome["pause_reasons"])
         if outcome["pause_comparison"] and not outcome.get("stop_reason"):
             outcome["stop_reason"] = outcome["pause_reasons"][0]
