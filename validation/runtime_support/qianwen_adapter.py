@@ -234,9 +234,7 @@ def invoke(role, messages, *, client, key_reader, tools=None, tool_choice=None,
         budget_session.before_request()
         message.cost = None
         message.usage = None if usage["status"] != "known" else {k: usage[k] for k in ("prompt_tokens", "completion_tokens")}
-        if message_observer is not None:
-            message_observer(message)
-        return {"status": "incomplete" if observed.get("finish_reason") == "length" else "received",
+        converted = {"status": "incomplete" if observed.get("finish_reason") == "length" else "received",
             "role": role, "model": MODELS[role], "parameters": kwargs,
             "message": redact(message.model_dump(mode="json", exclude={"raw_data"}), key),
             "litellm_response": redact({k: message.raw_data[k] for k in ("id", "object", "created", "model", "choices", "usage") if message.raw_data and k in message.raw_data}, key),
@@ -245,6 +243,23 @@ def invoke(role, messages, *, client, key_reader, tools=None, tool_choice=None,
             "provider_cost": {"status": "unknown", "amount": None, "currency": None},
             "elapsed_seconds": round(time.perf_counter() - start, 6), "task_success": None,
             "transport": "phase0_counted_transport", "real_model_request": client._transport.live}
+        from compatibility import normalize_mixed_response
+        normalization = normalize_mixed_response(observed.get("raw_response"), converted, tools or [], messages)
+        if normalization is not None:
+            observed["mixed_content_normalization"] = normalization
+            converted["mixed_content_normalization"] = redact(normalization, key)
+            persist("mixed_content_decision_saved_before_message_release")
+            if normalization["status"] != "normalized":
+                client._transport.stopped = True
+                raise InterfaceRequestError("Mixed response cannot be safely normalized; see saved audit")
+            # Only this copy reaches tau2. raw_data and supplier evidence retain
+            # the original text, finish reason, usage and ordered tool calls.
+            message = message.model_copy(deep=True)
+            message.content = None
+            converted["message"] = redact(message.model_dump(mode="json", exclude={"raw_data"}), key)
+        if message_observer is not None:
+            message_observer(message)
+        return converted
     finally:
         client.event_hooks["response"] = hooks
         for name, value in old.items():

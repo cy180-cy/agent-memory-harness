@@ -31,7 +31,8 @@ def bind_roles(client, key_reader, records, *, budget_session, persist):
                 key_reader=key_reader, tools=request.get("tools"), tool_choice=request.get("tool_choice"),
                 evidence=observed, message_observer=actual.append,
                 budget_session=budget_session, persist_evidence=save)
-            classification = assess(observed.get("raw_response"), converted, request.get("tools") or [], tool_loop_verified=True)
+            classification = assess(observed.get("raw_response"), converted, request.get("tools") or [], tool_loop_verified=True,
+                                    messages=request["messages"])
             entry.update(converted=converted, classification=classification)
             require(classification["adapter_compatibility_check"]["status"] == "passed", "Unsafe response; business tool blocked")
             require(len(actual) == 1, "Actual upstream message missing")

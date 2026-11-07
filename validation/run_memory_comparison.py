@@ -87,7 +87,7 @@ def main():
     parser.add_argument("--gate-only",action="store_true",help="With --tests, run only A-to-B gate tests")
     parser.add_argument("--user-output-only",action="store_true",help="With --tests, run the User output profile regressions only")
     parser.add_argument("--runtime-fix-only",action="store_true",help="With --tests, run mode and thinking-budget regressions only")
-    parser.add_argument("--development-tests",choices=("ledger","structured","evaluation","portable","fees"),help="With --tests, run only the selected development tests")
+    parser.add_argument("--development-tests",choices=("ledger","structured","evaluation","portable","fees","mixed"),help="With --tests, run only the selected development tests")
     args = parser.parse_args()
     if args.phase1_07 and (not args.suite or args.execute or args.task_ids != ["69", "73", "93"]):
         parser.error("--phase1-07 requires offline --suite --task-ids 69 73 93")
@@ -185,6 +185,7 @@ def main():
             targets = [str(ROOT/{"ledger":"tests/test_ledger_persistence.py", "structured":"tests/test_structured_memory.py",
                                 "evaluation":"tests/test_memory_evaluation.py",
                                 "fees":"tests/test_suite_fees.py",
+                                "mixed":"tests/test_mixed_response.py",
                                 "portable":"tests/test_repository_state.py"}[args.development_tests])]
             if args.development_tests == "evaluation":
                 targets += [str(ROOT/"tests/test_comparison_gate.py") + "::test_actual_run_pair_constructs_B_for_valid_reward_zero_or_one",

@@ -1,8 +1,11 @@
 """Classify raw protocol and actual adapted behavior without rewriting either."""
 import json
+from copy import deepcopy
+
+from mixed_response import transition_audit
 
 
-def assess(raw, adapted, tools, *, tool_loop_verified=False):
+def assess(raw, adapted, tools, *, tool_loop_verified=False, messages=None):
     reasons = []
     result = {"raw_protocol_check": {"status": "failed"},
               "adapter_compatibility_check": {"status": "failed"},
@@ -67,12 +70,52 @@ def assess(raw, adapted, tools, *, tool_loop_verified=False):
         norm_calls = [{"id": c["id"], "name": c["function"]["name"], "arguments": json.loads(c["function"]["arguments"])} for c in normalized["message"]["tool_calls"]]
         if actual != expected or norm_calls != expected or normalized.get("finish_reason") != "tool_calls":
             raise ValueError("conversion_changed_tool_or_finish")
+        raw_content = message.get("content")
+        if raw_content:
+            if normalized["message"].get("content") != raw_content:
+                raise ValueError("conversion_changed_original_text")
+            audit = transition_audit(raw_content, expected, tools, messages)
+            if audit["status"] != "normalized":
+                raise ValueError(audit["reason"])
+            if adapted.get("mixed_content_normalization") != audit:
+                raise ValueError("mixed_text_requires_saved_normalization_audit")
         if adapted["message"].get("content"):
             raise ValueError("mixed_text_and_tools")
     except Exception as error:
         reasons.append(str(error) if isinstance(error, ValueError) else type(error).__name__)
         return result
     result.update(kind="tools", tool_candidate_valid=True, verified_calls=expected)
-    result["raw_protocol_check"].update(status="passed" if finish == "tool_calls" else "failed", difference="stop_with_structured_tools" if finish == "stop" else None)
+    result["raw_protocol_check"].update(status="passed" if finish == "tool_calls" and not message.get("content") else "failed",
+        difference="mixed_text_and_tools" if message.get("content") else "stop_with_structured_tools" if finish == "stop" else None,
+        contract="tau2_half_duplex")
     result["adapter_compatibility_check"].update(status="passed" if tool_loop_verified else "awaiting_loop", tool_exception_applied=finish == "stop", loop_verified=tool_loop_verified)
     return result
+
+
+def normalize_mixed_response(raw, adapted, tools, messages):
+    """Normalize only the tau2 message; retain both supplier/LiteLLM structures."""
+    choices = raw.get("choices", []) if isinstance(raw, dict) else []
+    if len(choices) != 1 or not isinstance(choices[0], dict):
+        return None
+    message = choices[0].get("message") or {}
+    if not message.get("tool_calls") or not message.get("content"):
+        return None
+    # Validate the full existing tool contract before evaluating prose. These
+    # temporary views are never persisted as provider evidence or sent to a model.
+    raw_view, target = deepcopy(raw), deepcopy(adapted)
+    raw_view["choices"][0]["message"]["content"] = None
+    target["message"]["content"] = None
+    target["litellm_response"]["choices"][0]["message"]["content"] = None
+    validation = assess(raw_view, target, tools, tool_loop_verified=True)
+    if not validation["tool_candidate_valid"]:
+        return {"status": "blocked", "reason": "invalid_mixed_tool_response",
+                "original_content": message["content"], "validation": validation}
+    audit = transition_audit(message["content"], validation["verified_calls"], tools, messages)
+    if audit["status"] == "normalized":
+        target = deepcopy(adapted)
+        target["message"]["content"] = None
+        target["mixed_content_normalization"] = audit
+        check = assess(raw, target, tools, tool_loop_verified=True, messages=messages)
+        if check["adapter_compatibility_check"]["status"] != "passed":
+            audit.update(status="blocked", reason="mixed_conversion_mismatch", validation=check)
+    return audit
