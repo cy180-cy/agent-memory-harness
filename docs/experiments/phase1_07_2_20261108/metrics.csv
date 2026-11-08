@@ -1,0 +1,10 @@
+﻿task_id,strategy,status,outcome_class,official_reward,db_reward,scoring_valid,requests,agent_requests,user_requests,agent_input_tokens,agent_output_tokens,user_input_tokens,user_output_tokens,input_tokens,output_tokens,total_tokens,tool_calls,tool_errors,actual_trim_generations,removed_blocks,stored_facts,active_facts,max_injected_facts,total_seconds,estimated_cost_cny,supplier_bill_cny,stop_reason
+69,full_history,completed,business_failure,0.0,0.0,True,12,8,4,47336,1687,3332,795,50668,2482,53150,5,0,0,0,0,0,0,57.703894400037825,0.0913465,,
+69,budget_window,completed,completed_success,1.0,1.0,True,17,11,6,68874,2650,6843,1393,75717,4043,79760,6,0,1,3,0,0,0,89.90875470009632,0.1363939,,
+69,structured_memory,completed,completed_success,1.0,1.0,True,17,11,6,69260,2652,6297,1355,75557,4007,79564,6,0,1,4,138,131,26,76.72713630006183,0.1364849,,
+73,full_history,completed,completed_success,1.0,1.0,True,11,7,4,41281,1725,3032,412,44313,2137,46450,4,0,0,0,0,0,0,50.290280600078404,0.0806276,,
+73,budget_window,completed,completed_success,1.0,1.0,True,13,8,5,48118,2129,4215,562,52333,2691,55024,4,0,0,0,0,0,0,61.73387809994165,0.0955038,,
+73,structured_memory,completed,completed_success,1.0,1.0,True,11,7,4,41222,1813,3031,378,44253,2191,46444,4,0,0,0,92,87,0,49.2418931000866,0.0810038,,
+93,full_history,completed,business_failure,0.0,0.0,True,15,10,5,67686,3032,4379,1341,72065,4373,76438,6,0,0,0,0,0,0,87.65990490000695,0.1348263,,
+93,budget_window,resource_stop,resource_stop,,,False,6,5,1,28781,646,458,259,29239,905,30144,5,0,0,0,0,0,0,22.913936399971135,0.0512497,,context_budget_exceeded
+93,structured_memory,not_executed,not_executed,,,False,0,0,0,,,,,,,,0,0,0,0,0,0,0,,,,context_budget_exceeded

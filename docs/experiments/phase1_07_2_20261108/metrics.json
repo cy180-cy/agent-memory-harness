@@ -1,0 +1,3250 @@
+{
+  "schema": "phase1-07-2-sanitized-evaluation-v1",
+  "date": "2026-11-08",
+  "timezone": "Asia/Shanghai",
+  "authorization_id": "AMH-PHASE1-07-2-RETAIL-01",
+  "comparison_id": "20261108T223632706573+0800_50f1c5631a",
+  "identity_sha256": "a8fef738be043bef443fd984712144b50e327ee589803bc680099a7c4d24d212",
+  "run_identity": {
+    "upstream_head": "fc0055dc4e0a316c3f83133267fbd6faaa770992",
+    "development_head": "3bd276666d2e03e2fd5c15ecd781f663d60b6c6d",
+    "branch": "feature/agent-memory-evaluation",
+    "tracked_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "dependencies": {
+      "tau2": "1.0.1",
+      "litellm": "1.82.6",
+      "httpx": "0.28.1",
+      "openai": "3.24.0",
+      "tiktoken": "0.14.0"
+    }
+  },
+  "source_manifest_sha256": "d5ec068bfa2db7d355eed1ba09f1c80aee531ed0f45121f2d07962662f91ab1d",
+  "input_fingerprints": {
+    "69": {
+      "task_sha256": "9fe1a4f173c0c4580ad62e2c9f06473795a31a84617b37e857cc4cbf3bca91c3",
+      "policy_sha256": "8a80a07edc5d308465f1435af8a01a56f1e4a37409e2b2fe6e679046e19d3f23",
+      "tools_sha256": "c1b3ff400ce83557f898d8603de1ebb9aee48ebd7ab0524698a8d5068b76ac73",
+      "data_files": {
+        "data/tau2/domains/retail/db.json": "dbde692e380bb4ad17f9f7841172cf1e69bebad2daa405628ccdc52a42b3b9b0",
+        "data/tau2/domains/retail/tasks.json": "f44563d8f36362e2dc58282bb02cfb85010d22f27d9439808758d3e9b2bc16d2",
+        "data/tau2/domains/retail/policy.md": "4313d3fef8acf919f555fa17fbce929cc3ed1cef2dd8f0d35ff5c8c3364de176",
+        "data/tau2/domains/retail/split_tasks.json": "5f9949b833e6b99584b87e84ef22f9d81789ea67a52e534c6f7aa91eff08adc7"
+      },
+      "user_guidelines_files": {
+        "data/tau2/user_simulator/simulation_guidelines.md": "e054adb606a4aa6f586f33f3aa61542954b6f699d029c9cd4c156e28b6300067",
+        "data/tau2/user_simulator/simulation_guidelines_tools.md": "18edb8d870a9a094f3514531e8da3398ddaa87849c48344841f4714c1c5d0239",
+        "data/tau2/user_simulator/simulation_guidelines_voice.md": "c5b5172defd04c63cf03ceb573df4ed16997cbeb1993d29a46648ab718e6d314",
+        "data/tau2/user_simulator/simulation_guidelines_voice_tools.md": "a19257bd8e8d929343640232d05064d8c800be87318e1c5826a87663b3a16024"
+      }
+    },
+    "73": {
+      "task_sha256": "00c879737e98d38f227ba39dd24b5f77fa4c269fdde1d4e74a6816823d2e7926",
+      "policy_sha256": "8a80a07edc5d308465f1435af8a01a56f1e4a37409e2b2fe6e679046e19d3f23",
+      "tools_sha256": "c1b3ff400ce83557f898d8603de1ebb9aee48ebd7ab0524698a8d5068b76ac73",
+      "data_files": {
+        "data/tau2/domains/retail/db.json": "dbde692e380bb4ad17f9f7841172cf1e69bebad2daa405628ccdc52a42b3b9b0",
+        "data/tau2/domains/retail/tasks.json": "f44563d8f36362e2dc58282bb02cfb85010d22f27d9439808758d3e9b2bc16d2",
+        "data/tau2/domains/retail/policy.md": "4313d3fef8acf919f555fa17fbce929cc3ed1cef2dd8f0d35ff5c8c3364de176",
+        "data/tau2/domains/retail/split_tasks.json": "5f9949b833e6b99584b87e84ef22f9d81789ea67a52e534c6f7aa91eff08adc7"
+      },
+      "user_guidelines_files": {
+        "data/tau2/user_simulator/simulation_guidelines.md": "e054adb606a4aa6f586f33f3aa61542954b6f699d029c9cd4c156e28b6300067",
+        "data/tau2/user_simulator/simulation_guidelines_tools.md": "18edb8d870a9a094f3514531e8da3398ddaa87849c48344841f4714c1c5d0239",
+        "data/tau2/user_simulator/simulation_guidelines_voice.md": "c5b5172defd04c63cf03ceb573df4ed16997cbeb1993d29a46648ab718e6d314",
+        "data/tau2/user_simulator/simulation_guidelines_voice_tools.md": "a19257bd8e8d929343640232d05064d8c800be87318e1c5826a87663b3a16024"
+      }
+    },
+    "93": {
+      "task_sha256": "bd975379c7eb7b734a9542673428cdce59db4b1012b9234d13ad33f3a9c337cf",
+      "policy_sha256": "8a80a07edc5d308465f1435af8a01a56f1e4a37409e2b2fe6e679046e19d3f23",
+      "tools_sha256": "c1b3ff400ce83557f898d8603de1ebb9aee48ebd7ab0524698a8d5068b76ac73",
+      "data_files": {
+        "data/tau2/domains/retail/db.json": "dbde692e380bb4ad17f9f7841172cf1e69bebad2daa405628ccdc52a42b3b9b0",
+        "data/tau2/domains/retail/tasks.json": "f44563d8f36362e2dc58282bb02cfb85010d22f27d9439808758d3e9b2bc16d2",
+        "data/tau2/domains/retail/policy.md": "4313d3fef8acf919f555fa17fbce929cc3ed1cef2dd8f0d35ff5c8c3364de176",
+        "data/tau2/domains/retail/split_tasks.json": "5f9949b833e6b99584b87e84ef22f9d81789ea67a52e534c6f7aa91eff08adc7"
+      },
+      "user_guidelines_files": {
+        "data/tau2/user_simulator/simulation_guidelines.md": "e054adb606a4aa6f586f33f3aa61542954b6f699d029c9cd4c156e28b6300067",
+        "data/tau2/user_simulator/simulation_guidelines_tools.md": "18edb8d870a9a094f3514531e8da3398ddaa87849c48344841f4714c1c5d0239",
+        "data/tau2/user_simulator/simulation_guidelines_voice.md": "c5b5172defd04c63cf03ceb573df4ed16997cbeb1993d29a46648ab718e6d314",
+        "data/tau2/user_simulator/simulation_guidelines_voice_tools.md": "a19257bd8e8d929343640232d05064d8c800be87318e1c5826a87663b3a16024"
+      }
+    }
+  },
+  "configuration": {
+    "domain": "retail",
+    "split": "train",
+    "num_trials": 1,
+    "concurrency": 1,
+    "agent": "memory_agent",
+    "user": "user_simulator",
+    "models": {
+      "agent": "openai/qwen3.7-plus",
+      "user": "openai/qwen3.8-flash"
+    },
+    "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+    "role_args": {
+      "agent": {
+        "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+        "temperature": 0.0,
+        "max_completion_tokens": 3072,
+        "timeout": 30.0,
+        "num_retries": 0,
+        "max_retries": 0,
+        "drop_params": false,
+        "stream": false,
+        "extra_body": {
+          "thinking_budget": 1536
+        }
+      },
+      "user": {
+        "api_base": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+        "temperature": 0.0,
+        "max_completion_tokens": 1024,
+        "timeout": 30.0,
+        "num_retries": 0,
+        "max_retries": 0,
+        "drop_params": false,
+        "stream": false
+      }
+    },
+    "output_config_version": "comparison-output-agent3072-thinking1536-v1",
+    "seed_rule": {
+      "orchestrator_seed": 42,
+      "agent_and_user_state_seed": 42,
+      "provider_seed_parameter": "not_forwarded_by_existing_adapter",
+      "paired_responses": false
+    },
+    "limits": {
+      "group_requests": 20,
+      "comparison_requests": 180,
+      "max_steps": 30,
+      "max_errors": 1,
+      "task_timeout_seconds": 300,
+      "http_phase_timeout_seconds": 30,
+      "retries": {
+        "sdk": 0,
+        "http": 0,
+        "task": 0
+      }
+    },
+    "evaluation": {
+      "type": "ALL",
+      "reward_basis": [
+        "DB",
+        "NL_ASSERTION"
+      ],
+      "strict_replay": true,
+      "nl_judge": false,
+      "review": false,
+      "communication_validation": true
+    },
+    "input_counter": {
+      "name": "complete-json-bpe-surrogate",
+      "version": "1",
+      "tiktoken_version": "0.14.0",
+      "litellm_version": "1.82.6",
+      "tokenizer": "cl100k_base (installed LiteLLM default_encoding)",
+      "fallback": "generic local BPE, not Qwen-native tokenization",
+      "is_estimate": true,
+      "provider_framing_verified": false
+    },
+    "comparison_interpretation": "全历史参考组与受输入预算约束的两种策略的工程取舍；并非相同输入预算"
+  },
+  "memory_configurations": {
+    "full_history": {
+      "name": "full_history",
+      "version": "1",
+      "config": {}
+    },
+    "budget_window": {
+      "name": "budget_window",
+      "version": "1",
+      "config": {
+        "max_input_tokens": 7168,
+        "safety_margin_tokens": 128
+      }
+    },
+    "structured_memory": {
+      "name": "structured_memory",
+      "version": "1",
+      "config": {
+        "max_input_tokens": 7168,
+        "safety_margin_tokens": 128
+      }
+    }
+  },
+  "pricing_policy": {
+    "version": "phase1-07-user-quoted-cny-v1",
+    "limit_cny": "10",
+    "input_reserve_multiplier": "1.20",
+    "agent_tier_threshold_tokens": 256000,
+    "agent": {
+      "input": "1.60",
+      "output": "6.40",
+      "large_input": "4.80",
+      "large_output": "19.20"
+    },
+    "user": {
+      "input": "0.80",
+      "output": "2.70"
+    },
+    "basis": "user-provided console rates per million tokens; no cache/free discounts",
+    "supplier_bill_verified": false
+  },
+  "pricing_validity": "Reused prior user-supplied same-platform rates as explicitly instructed; current platform bill not independently queried. No cache/free discounts applied.",
+  "counts": {
+    "planned_groups": 9,
+    "executed_groups": 8,
+    "completed_and_scored": 7,
+    "business_successes": 5,
+    "business_failures": 2,
+    "resource_stops": 1,
+    "not_executed": 1,
+    "real_api_requests": 102,
+    "mock_requests": 0,
+    "judge_calls": 0,
+    "review_calls": 0,
+    "api_errors": 0,
+    "timeouts": 0,
+    "tool_calls": 40,
+    "tool_errors": 0,
+    "retries": 0
+  },
+  "actual_supplier_tokens": {
+    "prompt_tokens": 444145,
+    "completion_tokens": 22829,
+    "total_tokens": 466974
+  },
+  "role_totals": {
+    "agent": {
+      "prompt_tokens": 412558,
+      "completion_tokens": 16334,
+      "total_tokens": 428892,
+      "requests": 67,
+      "reasoning_tokens_subset": 8959
+    },
+    "user": {
+      "prompt_tokens": 31587,
+      "completion_tokens": 6495,
+      "total_tokens": 38082,
+      "requests": 35,
+      "reasoning_tokens_subset": 4391
+    }
+  },
+  "estimated_cost_cny": "0.8074365",
+  "supplier_bill_cny": null,
+  "cost_status": "usage_based_estimate_not_supplier_bill",
+  "suite_seconds": 499.08134759997483,
+  "stop_reason": "context_budget_exceeded",
+  "final_gate": {
+    "schema": "A-to-B-gate-v1",
+    "allowed": false,
+    "primary_reason": "context_budget_exceeded",
+    "reasons": [
+      "context_budget_exceeded",
+      "A_not_completed",
+      "A_termination_not_normal",
+      "A_pause_or_error_recorded",
+      "A_scoring_not_valid",
+      "A_reward_unverifiable",
+      "A_DB_result_missing",
+      "A_trajectory_complete_not_verified",
+      "A_artifacts_complete_not_verified",
+      "A_persisted_evidence_unverifiable"
+    ],
+    "A_status": "resource_stop",
+    "A_stop_reason": "context_budget_exceeded",
+    "business_reward_is_not_the_gate": true,
+    "local_context_stop": false,
+    "from_group": "t93_budget_window",
+    "to_group": "t93_structured_memory"
+  },
+  "protocol": {
+    "raw_passed": 102,
+    "raw_finish_stop": 62,
+    "converted_finish_stop": 62,
+    "kind_text": 62,
+    "tool_exception_applied": 0,
+    "raw_finish_tool_calls": 40,
+    "converted_finish_tool_calls": 40,
+    "kind_tools": 40
+  },
+  "rows": [
+    {
+      "task_id": "69",
+      "strategy": "full_history",
+      "group": "t69_full_history",
+      "run_id": "20261108T223632706573+0800_50f1c5631a_t69_full_history",
+      "status": "completed",
+      "outcome_class": "business_failure",
+      "official_reward": 0.0,
+      "db_reward": 0.0,
+      "scoring_valid": true,
+      "requests": 12,
+      "usage_source": "supplier_raw_response",
+      "usage_status": "known",
+      "actual_tokens": {
+        "prompt_tokens": 50668,
+        "completion_tokens": 2482,
+        "total_tokens": 53150
+      },
+      "unknown_usage_attempts": 0,
+      "tool_calls": 5,
+      "tool_errors": 0,
+      "tool_results_missing": 0,
+      "removed_blocks": 0,
+      "stored_facts": 0,
+      "active_facts": 0,
+      "injected_fact_counts": [],
+      "total_seconds": 57.703894400037825,
+      "stop_reason": null,
+      "source_kind": "real",
+      "roles": {
+        "agent": {
+          "requests": 8,
+          "successful_http": 8,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 47336,
+            "completion_tokens": 1687,
+            "total_tokens": 49023
+          },
+          "actual_tokens": {
+            "prompt_tokens": 47336,
+            "completion_tokens": 1687,
+            "total_tokens": 49023
+          },
+          "reasoning_tokens_known_subtotal": 894
+        },
+        "user": {
+          "requests": 4,
+          "successful_http": 4,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 3332,
+            "completion_tokens": 795,
+            "total_tokens": 4127
+          },
+          "actual_tokens": {
+            "prompt_tokens": 3332,
+            "completion_tokens": 795,
+            "total_tokens": 4127
+          },
+          "reasoning_tokens_known_subtotal": 538
+        }
+      },
+      "estimated_cost_cny": "0.0913465",
+      "supplier_bill_cny": null,
+      "cost_status": "usage_based_estimate",
+      "tool_sequence": [
+        "find_user_id_by_name_zip",
+        "get_user_details",
+        "get_order_details",
+        "get_order_details",
+        "get_order_details"
+      ],
+      "termination_reason": "user_stop",
+      "db_unchanged": true,
+      "step_count": 17,
+      "source_backed_facts": null,
+      "context_selection_events": [],
+      "actual_trim_generations": 0
+    },
+    {
+      "task_id": "69",
+      "strategy": "budget_window",
+      "group": "t69_budget_window",
+      "run_id": "20261108T223632706573+0800_50f1c5631a_t69_budget_window",
+      "status": "completed",
+      "outcome_class": "completed_success",
+      "official_reward": 1.0,
+      "db_reward": 1.0,
+      "scoring_valid": true,
+      "requests": 17,
+      "usage_source": "supplier_raw_response",
+      "usage_status": "known",
+      "actual_tokens": {
+        "prompt_tokens": 75717,
+        "completion_tokens": 4043,
+        "total_tokens": 79760
+      },
+      "unknown_usage_attempts": 0,
+      "tool_calls": 6,
+      "tool_errors": 0,
+      "tool_results_missing": 0,
+      "removed_blocks": 3,
+      "stored_facts": 0,
+      "active_facts": 0,
+      "injected_fact_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "total_seconds": 89.90875470009632,
+      "stop_reason": null,
+      "source_kind": "real",
+      "roles": {
+        "agent": {
+          "requests": 11,
+          "successful_http": 11,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 68874,
+            "completion_tokens": 2650,
+            "total_tokens": 71524
+          },
+          "actual_tokens": {
+            "prompt_tokens": 68874,
+            "completion_tokens": 2650,
+            "total_tokens": 71524
+          },
+          "reasoning_tokens_known_subtotal": 1360
+        },
+        "user": {
+          "requests": 6,
+          "successful_http": 6,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 6843,
+            "completion_tokens": 1393,
+            "total_tokens": 8236
+          },
+          "actual_tokens": {
+            "prompt_tokens": 6843,
+            "completion_tokens": 1393,
+            "total_tokens": 8236
+          },
+          "reasoning_tokens_known_subtotal": 933
+        }
+      },
+      "estimated_cost_cny": "0.1363939",
+      "supplier_bill_cny": null,
+      "cost_status": "usage_based_estimate",
+      "tool_sequence": [
+        "find_user_id_by_name_zip",
+        "get_user_details",
+        "get_order_details",
+        "get_order_details",
+        "get_order_details",
+        "cancel_pending_order"
+      ],
+      "termination_reason": "user_stop",
+      "db_unchanged": false,
+      "step_count": 23,
+      "source_backed_facts": null,
+      "context_selection_events": [
+        {
+          "agent_generation": 1,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4344,
+          "estimated_input_tokens_after": 4344,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 2,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 2,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 0,
+              "results": 0
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 0,
+              "results": 0
+            }
+          }
+        },
+        {
+          "agent_generation": 2,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4466,
+          "estimated_input_tokens_after": 4466,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 4,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 4,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 0,
+              "results": 0
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 0,
+              "results": 0
+            }
+          }
+        },
+        {
+          "agent_generation": 3,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4579,
+          "estimated_input_tokens_after": 4579,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 6,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 6,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 1,
+              "results": 1
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 1,
+              "results": 1
+            }
+          }
+        },
+        {
+          "agent_generation": 4,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4857,
+          "estimated_input_tokens_after": 4857,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 8,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 8,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 2,
+              "results": 2
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 2,
+              "results": 2
+            }
+          }
+        },
+        {
+          "agent_generation": 5,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5197,
+          "estimated_input_tokens_after": 5197,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 10,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 10,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 3,
+              "results": 3
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 3,
+              "results": 3
+            }
+          }
+        },
+        {
+          "agent_generation": 6,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5552,
+          "estimated_input_tokens_after": 5552,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 12,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 12,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 4,
+              "results": 4
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 4,
+              "results": 4
+            }
+          }
+        },
+        {
+          "agent_generation": 7,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5999,
+          "estimated_input_tokens_after": 5999,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 14,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 14,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 5,
+              "results": 5
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 5,
+              "results": 5
+            }
+          }
+        },
+        {
+          "agent_generation": 8,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 6352,
+          "estimated_input_tokens_after": 6352,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 16,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 15,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 15,
+              "end": 16,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 5,
+              "results": 5
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 5,
+              "results": 5
+            }
+          }
+        },
+        {
+          "agent_generation": 9,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 6702,
+          "estimated_input_tokens_after": 6702,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 18,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 15,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 15,
+              "end": 17,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 17,
+              "end": 18,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 5,
+              "results": 5
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 5,
+              "results": 5
+            }
+          }
+        },
+        {
+          "agent_generation": 10,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 7039,
+          "estimated_input_tokens_after": 7039,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 20,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 15,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 15,
+              "end": 17,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 17,
+              "end": 19,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 19,
+              "end": 20,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 5,
+              "results": 5
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 5,
+              "results": 5
+            }
+          }
+        },
+        {
+          "agent_generation": 11,
+          "status": "trimmed",
+          "estimated_input_tokens_before": 7425,
+          "estimated_input_tokens_after": 5450,
+          "removed_block_count": 3,
+          "removed_message_count": 15,
+          "retained_message_count": 7,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 15,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            }
+          ],
+          "retained_blocks": [
+            {
+              "start": 15,
+              "end": 17,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 17,
+              "end": 19,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 19,
+              "end": 22,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 6,
+              "results": 6
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 1,
+              "results": 1
+            }
+          }
+        }
+      ],
+      "actual_trim_generations": 1
+    },
+    {
+      "task_id": "69",
+      "strategy": "structured_memory",
+      "group": "t69_structured_memory",
+      "run_id": "20261108T223632706573+0800_50f1c5631a_t69_structured_memory",
+      "status": "completed",
+      "outcome_class": "completed_success",
+      "official_reward": 1.0,
+      "db_reward": 1.0,
+      "scoring_valid": true,
+      "requests": 17,
+      "usage_source": "supplier_raw_response",
+      "usage_status": "known",
+      "actual_tokens": {
+        "prompt_tokens": 75557,
+        "completion_tokens": 4007,
+        "total_tokens": 79564
+      },
+      "unknown_usage_attempts": 0,
+      "tool_calls": 6,
+      "tool_errors": 0,
+      "tool_results_missing": 0,
+      "removed_blocks": 4,
+      "stored_facts": 138,
+      "active_facts": 131,
+      "injected_fact_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        26
+      ],
+      "total_seconds": 76.72713630006183,
+      "stop_reason": null,
+      "source_kind": "real",
+      "roles": {
+        "agent": {
+          "requests": 11,
+          "successful_http": 11,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 69260,
+            "completion_tokens": 2652,
+            "total_tokens": 71912
+          },
+          "actual_tokens": {
+            "prompt_tokens": 69260,
+            "completion_tokens": 2652,
+            "total_tokens": 71912
+          },
+          "reasoning_tokens_known_subtotal": 1533
+        },
+        "user": {
+          "requests": 6,
+          "successful_http": 6,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 6297,
+            "completion_tokens": 1355,
+            "total_tokens": 7652
+          },
+          "actual_tokens": {
+            "prompt_tokens": 6297,
+            "completion_tokens": 1355,
+            "total_tokens": 7652
+          },
+          "reasoning_tokens_known_subtotal": 827
+        }
+      },
+      "estimated_cost_cny": "0.1364849",
+      "supplier_bill_cny": null,
+      "cost_status": "usage_based_estimate",
+      "tool_sequence": [
+        "find_user_id_by_name_zip",
+        "get_user_details",
+        "get_order_details",
+        "get_order_details",
+        "get_order_details",
+        "cancel_pending_order"
+      ],
+      "termination_reason": "user_stop",
+      "db_unchanged": false,
+      "step_count": 23,
+      "source_backed_facts": {
+        "fact_count": 138,
+        "all_facts_have_sources": true,
+        "fact_status_counts": {
+          "response_received_unverified": 5,
+          "active": 131,
+          "superseded": 2
+        }
+      },
+      "context_selection_events": [
+        {
+          "agent_generation": 1,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4349,
+          "estimated_input_tokens_after": 4349,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 2,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 0,
+            "results": 0
+          }
+        },
+        {
+          "agent_generation": 2,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4477,
+          "estimated_input_tokens_after": 4477,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 4,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 0,
+            "results": 0
+          }
+        },
+        {
+          "agent_generation": 3,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4607,
+          "estimated_input_tokens_after": 4607,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 5,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 5,
+              "end": 6,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 0,
+            "results": 0
+          }
+        },
+        {
+          "agent_generation": 4,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4722,
+          "estimated_input_tokens_after": 4722,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 5,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 5,
+              "end": 8,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 1,
+            "results": 1
+          }
+        },
+        {
+          "agent_generation": 5,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4994,
+          "estimated_input_tokens_after": 4994,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 5,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 5,
+              "end": 10,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 2,
+            "results": 2
+          }
+        },
+        {
+          "agent_generation": 6,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5340,
+          "estimated_input_tokens_after": 5340,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 5,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 5,
+              "end": 12,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 3,
+            "results": 3
+          }
+        },
+        {
+          "agent_generation": 7,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5685,
+          "estimated_input_tokens_after": 5685,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 5,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 5,
+              "end": 14,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 4,
+            "results": 4
+          }
+        },
+        {
+          "agent_generation": 8,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 6130,
+          "estimated_input_tokens_after": 6130,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 5,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 5,
+              "end": 16,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 5,
+            "results": 5
+          }
+        },
+        {
+          "agent_generation": 9,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 6570,
+          "estimated_input_tokens_after": 6570,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 5,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 5,
+              "end": 17,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 17,
+              "end": 18,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 5,
+            "results": 5
+          }
+        },
+        {
+          "agent_generation": 10,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 7014,
+          "estimated_input_tokens_after": 7014,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 5,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 5,
+              "end": 17,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 17,
+              "end": 19,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 19,
+              "end": 20,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 5,
+            "results": 5
+          }
+        },
+        {
+          "agent_generation": 11,
+          "status": "structured",
+          "estimated_input_tokens_before": 7398,
+          "estimated_input_tokens_after": 7004,
+          "removed_block_count": 4,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 26,
+          "removed_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 5,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 5,
+              "end": 17,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            }
+          ],
+          "retained_blocks": [
+            {
+              "start": 17,
+              "end": 19,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 19,
+              "end": 22,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 6,
+            "results": 6
+          }
+        }
+      ],
+      "actual_trim_generations": 1
+    },
+    {
+      "task_id": "73",
+      "strategy": "full_history",
+      "group": "t73_full_history",
+      "run_id": "20261108T223632706573+0800_50f1c5631a_t73_full_history",
+      "status": "completed",
+      "outcome_class": "completed_success",
+      "official_reward": 1.0,
+      "db_reward": 1.0,
+      "scoring_valid": true,
+      "requests": 11,
+      "usage_source": "supplier_raw_response",
+      "usage_status": "known",
+      "actual_tokens": {
+        "prompt_tokens": 44313,
+        "completion_tokens": 2137,
+        "total_tokens": 46450
+      },
+      "unknown_usage_attempts": 0,
+      "tool_calls": 4,
+      "tool_errors": 0,
+      "tool_results_missing": 0,
+      "removed_blocks": 0,
+      "stored_facts": 0,
+      "active_facts": 0,
+      "injected_fact_counts": [],
+      "total_seconds": 50.290280600078404,
+      "stop_reason": null,
+      "source_kind": "real",
+      "roles": {
+        "agent": {
+          "requests": 7,
+          "successful_http": 7,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 41281,
+            "completion_tokens": 1725,
+            "total_tokens": 43006
+          },
+          "actual_tokens": {
+            "prompt_tokens": 41281,
+            "completion_tokens": 1725,
+            "total_tokens": 43006
+          },
+          "reasoning_tokens_known_subtotal": 816
+        },
+        "user": {
+          "requests": 4,
+          "successful_http": 4,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 3032,
+            "completion_tokens": 412,
+            "total_tokens": 3444
+          },
+          "actual_tokens": {
+            "prompt_tokens": 3032,
+            "completion_tokens": 412,
+            "total_tokens": 3444
+          },
+          "reasoning_tokens_known_subtotal": 269
+        }
+      },
+      "estimated_cost_cny": "0.0806276",
+      "supplier_bill_cny": null,
+      "cost_status": "usage_based_estimate",
+      "tool_sequence": [
+        "find_user_id_by_email",
+        "get_user_details",
+        "get_order_details",
+        "return_delivered_order_items"
+      ],
+      "termination_reason": "user_stop",
+      "db_unchanged": false,
+      "step_count": 15,
+      "source_backed_facts": null,
+      "context_selection_events": [],
+      "actual_trim_generations": 0
+    },
+    {
+      "task_id": "73",
+      "strategy": "budget_window",
+      "group": "t73_budget_window",
+      "run_id": "20261108T223632706573+0800_50f1c5631a_t73_budget_window",
+      "status": "completed",
+      "outcome_class": "completed_success",
+      "official_reward": 1.0,
+      "db_reward": 1.0,
+      "scoring_valid": true,
+      "requests": 13,
+      "usage_source": "supplier_raw_response",
+      "usage_status": "known",
+      "actual_tokens": {
+        "prompt_tokens": 52333,
+        "completion_tokens": 2691,
+        "total_tokens": 55024
+      },
+      "unknown_usage_attempts": 0,
+      "tool_calls": 4,
+      "tool_errors": 0,
+      "tool_results_missing": 0,
+      "removed_blocks": 0,
+      "stored_facts": 0,
+      "active_facts": 0,
+      "injected_fact_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "total_seconds": 61.73387809994165,
+      "stop_reason": null,
+      "source_kind": "real",
+      "roles": {
+        "agent": {
+          "requests": 8,
+          "successful_http": 8,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 48118,
+            "completion_tokens": 2129,
+            "total_tokens": 50247
+          },
+          "actual_tokens": {
+            "prompt_tokens": 48118,
+            "completion_tokens": 2129,
+            "total_tokens": 50247
+          },
+          "reasoning_tokens_known_subtotal": 1064
+        },
+        "user": {
+          "requests": 5,
+          "successful_http": 5,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 4215,
+            "completion_tokens": 562,
+            "total_tokens": 4777
+          },
+          "actual_tokens": {
+            "prompt_tokens": 4215,
+            "completion_tokens": 562,
+            "total_tokens": 4777
+          },
+          "reasoning_tokens_known_subtotal": 400
+        }
+      },
+      "estimated_cost_cny": "0.0955038",
+      "supplier_bill_cny": null,
+      "cost_status": "usage_based_estimate",
+      "tool_sequence": [
+        "find_user_id_by_email",
+        "get_user_details",
+        "get_order_details",
+        "return_delivered_order_items"
+      ],
+      "termination_reason": "user_stop",
+      "db_unchanged": false,
+      "step_count": 17,
+      "source_backed_facts": null,
+      "context_selection_events": [
+        {
+          "agent_generation": 1,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4329,
+          "estimated_input_tokens_after": 4329,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 2,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 2,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 0,
+              "results": 0
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 0,
+              "results": 0
+            }
+          }
+        },
+        {
+          "agent_generation": 2,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4408,
+          "estimated_input_tokens_after": 4408,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 4,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 4,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 0,
+              "results": 0
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 0,
+              "results": 0
+            }
+          }
+        },
+        {
+          "agent_generation": 3,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4518,
+          "estimated_input_tokens_after": 4518,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 6,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 6,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 1,
+              "results": 1
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 1,
+              "results": 1
+            }
+          }
+        },
+        {
+          "agent_generation": 4,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4772,
+          "estimated_input_tokens_after": 4772,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 8,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 8,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 2,
+              "results": 2
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 2,
+              "results": 2
+            }
+          }
+        },
+        {
+          "agent_generation": 5,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5396,
+          "estimated_input_tokens_after": 5396,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 10,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 10,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 3,
+              "results": 3
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 3,
+              "results": 3
+            }
+          }
+        },
+        {
+          "agent_generation": 6,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5695,
+          "estimated_input_tokens_after": 5695,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 12,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 11,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 11,
+              "end": 12,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 3,
+              "results": 3
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 3,
+              "results": 3
+            }
+          }
+        },
+        {
+          "agent_generation": 7,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5977,
+          "estimated_input_tokens_after": 5977,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 14,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 11,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 11,
+              "end": 13,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 13,
+              "end": 14,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 3,
+              "results": 3
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 3,
+              "results": 3
+            }
+          }
+        },
+        {
+          "agent_generation": 8,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 6687,
+          "estimated_input_tokens_after": 6687,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 16,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 11,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 11,
+              "end": 13,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 13,
+              "end": 16,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 4,
+              "results": 4
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 4,
+              "results": 4
+            }
+          }
+        }
+      ],
+      "actual_trim_generations": 0
+    },
+    {
+      "task_id": "73",
+      "strategy": "structured_memory",
+      "group": "t73_structured_memory",
+      "run_id": "20261108T223632706573+0800_50f1c5631a_t73_structured_memory",
+      "status": "completed",
+      "outcome_class": "completed_success",
+      "official_reward": 1.0,
+      "db_reward": 1.0,
+      "scoring_valid": true,
+      "requests": 11,
+      "usage_source": "supplier_raw_response",
+      "usage_status": "known",
+      "actual_tokens": {
+        "prompt_tokens": 44253,
+        "completion_tokens": 2191,
+        "total_tokens": 46444
+      },
+      "unknown_usage_attempts": 0,
+      "tool_calls": 4,
+      "tool_errors": 0,
+      "tool_results_missing": 0,
+      "removed_blocks": 0,
+      "stored_facts": 92,
+      "active_facts": 87,
+      "injected_fact_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "total_seconds": 49.2418931000866,
+      "stop_reason": null,
+      "source_kind": "real",
+      "roles": {
+        "agent": {
+          "requests": 7,
+          "successful_http": 7,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 41222,
+            "completion_tokens": 1813,
+            "total_tokens": 43035
+          },
+          "actual_tokens": {
+            "prompt_tokens": 41222,
+            "completion_tokens": 1813,
+            "total_tokens": 43035
+          },
+          "reasoning_tokens_known_subtotal": 878
+        },
+        "user": {
+          "requests": 4,
+          "successful_http": 4,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 3031,
+            "completion_tokens": 378,
+            "total_tokens": 3409
+          },
+          "actual_tokens": {
+            "prompt_tokens": 3031,
+            "completion_tokens": 378,
+            "total_tokens": 3409
+          },
+          "reasoning_tokens_known_subtotal": 244
+        }
+      },
+      "estimated_cost_cny": "0.0810038",
+      "supplier_bill_cny": null,
+      "cost_status": "usage_based_estimate",
+      "tool_sequence": [
+        "find_user_id_by_email",
+        "get_user_details",
+        "get_order_details",
+        "return_delivered_order_items"
+      ],
+      "termination_reason": "user_stop",
+      "db_unchanged": false,
+      "step_count": 15,
+      "source_backed_facts": {
+        "fact_count": 92,
+        "all_facts_have_sources": true,
+        "fact_status_counts": {
+          "response_received_unverified": 3,
+          "active": 87,
+          "superseded": 2
+        }
+      },
+      "context_selection_events": [
+        {
+          "agent_generation": 1,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4327,
+          "estimated_input_tokens_after": 4327,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 2,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 0,
+            "results": 0
+          }
+        },
+        {
+          "agent_generation": 2,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4407,
+          "estimated_input_tokens_after": 4407,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 4,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 0,
+            "results": 0
+          }
+        },
+        {
+          "agent_generation": 3,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4509,
+          "estimated_input_tokens_after": 4509,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 6,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 1,
+            "results": 1
+          }
+        },
+        {
+          "agent_generation": 4,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4757,
+          "estimated_input_tokens_after": 4757,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 8,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 2,
+            "results": 2
+          }
+        },
+        {
+          "agent_generation": 5,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5387,
+          "estimated_input_tokens_after": 5387,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 10,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 3,
+            "results": 3
+          }
+        },
+        {
+          "agent_generation": 6,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5790,
+          "estimated_input_tokens_after": 5790,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 11,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 11,
+              "end": 12,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 3,
+            "results": 3
+          }
+        },
+        {
+          "agent_generation": 7,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 6498,
+          "estimated_input_tokens_after": 6498,
+          "removed_block_count": 0,
+          "removed_message_count": null,
+          "retained_message_count": null,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 3,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 3,
+              "end": 11,
+              "kind": "user_turn",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 11,
+              "end": 14,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "status": "passed",
+            "calls": 4,
+            "results": 4
+          }
+        }
+      ],
+      "actual_trim_generations": 0
+    },
+    {
+      "task_id": "93",
+      "strategy": "full_history",
+      "group": "t93_full_history",
+      "run_id": "20261108T223632706573+0800_50f1c5631a_t93_full_history",
+      "status": "completed",
+      "outcome_class": "business_failure",
+      "official_reward": 0.0,
+      "db_reward": 0.0,
+      "scoring_valid": true,
+      "requests": 15,
+      "usage_source": "supplier_raw_response",
+      "usage_status": "known",
+      "actual_tokens": {
+        "prompt_tokens": 72065,
+        "completion_tokens": 4373,
+        "total_tokens": 76438
+      },
+      "unknown_usage_attempts": 0,
+      "tool_calls": 6,
+      "tool_errors": 0,
+      "tool_results_missing": 0,
+      "removed_blocks": 0,
+      "stored_facts": 0,
+      "active_facts": 0,
+      "injected_fact_counts": [],
+      "total_seconds": 87.65990490000695,
+      "stop_reason": null,
+      "source_kind": "real",
+      "roles": {
+        "agent": {
+          "requests": 10,
+          "successful_http": 10,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 67686,
+            "completion_tokens": 3032,
+            "total_tokens": 70718
+          },
+          "actual_tokens": {
+            "prompt_tokens": 67686,
+            "completion_tokens": 3032,
+            "total_tokens": 70718
+          },
+          "reasoning_tokens_known_subtotal": 1981
+        },
+        "user": {
+          "requests": 5,
+          "successful_http": 5,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 4379,
+            "completion_tokens": 1341,
+            "total_tokens": 5720
+          },
+          "actual_tokens": {
+            "prompt_tokens": 4379,
+            "completion_tokens": 1341,
+            "total_tokens": 5720
+          },
+          "reasoning_tokens_known_subtotal": 976
+        }
+      },
+      "estimated_cost_cny": "0.1348263",
+      "supplier_bill_cny": null,
+      "cost_status": "usage_based_estimate",
+      "tool_sequence": [
+        "find_user_id_by_name_zip",
+        "get_user_details",
+        "get_order_details",
+        "get_order_details",
+        "get_product_details",
+        "get_order_details"
+      ],
+      "termination_reason": "user_stop",
+      "db_unchanged": true,
+      "step_count": 21,
+      "source_backed_facts": null,
+      "context_selection_events": [],
+      "actual_trim_generations": 0
+    },
+    {
+      "task_id": "93",
+      "strategy": "budget_window",
+      "group": "t93_budget_window",
+      "run_id": "20261108T223632706573+0800_50f1c5631a_t93_budget_window",
+      "status": "resource_stop",
+      "outcome_class": "resource_stop",
+      "official_reward": null,
+      "db_reward": null,
+      "scoring_valid": false,
+      "requests": 6,
+      "usage_source": "supplier_raw_response",
+      "usage_status": "known",
+      "actual_tokens": {
+        "prompt_tokens": 29239,
+        "completion_tokens": 905,
+        "total_tokens": 30144
+      },
+      "unknown_usage_attempts": 0,
+      "tool_calls": 5,
+      "tool_errors": 0,
+      "tool_results_missing": 0,
+      "removed_blocks": 0,
+      "stored_facts": 0,
+      "active_facts": 0,
+      "injected_fact_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "total_seconds": 22.913936399971135,
+      "stop_reason": "context_budget_exceeded",
+      "source_kind": "real",
+      "roles": {
+        "agent": {
+          "requests": 5,
+          "successful_http": 5,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 28781,
+            "completion_tokens": 646,
+            "total_tokens": 29427
+          },
+          "actual_tokens": {
+            "prompt_tokens": 28781,
+            "completion_tokens": 646,
+            "total_tokens": 29427
+          },
+          "reasoning_tokens_known_subtotal": 433
+        },
+        "user": {
+          "requests": 1,
+          "successful_http": 1,
+          "failed": 0,
+          "timeouts": 0,
+          "unknown_usage_attempts": 0,
+          "known_subtotal": {
+            "prompt_tokens": 458,
+            "completion_tokens": 259,
+            "total_tokens": 717
+          },
+          "actual_tokens": {
+            "prompt_tokens": 458,
+            "completion_tokens": 259,
+            "total_tokens": 717
+          },
+          "reasoning_tokens_known_subtotal": 204
+        }
+      },
+      "estimated_cost_cny": "0.0512497",
+      "supplier_bill_cny": null,
+      "cost_status": "usage_based_estimate",
+      "tool_sequence": [
+        "find_user_id_by_name_zip",
+        "get_user_details",
+        "get_order_details",
+        "get_order_details",
+        "get_product_details"
+      ],
+      "termination_reason": null,
+      "db_unchanged": true,
+      "step_count": 11,
+      "source_backed_facts": null,
+      "context_selection_events": [
+        {
+          "agent_generation": 1,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4349,
+          "estimated_input_tokens_after": 4349,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 2,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 2,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 0,
+              "results": 0
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 0,
+              "results": 0
+            }
+          }
+        },
+        {
+          "agent_generation": 2,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4468,
+          "estimated_input_tokens_after": 4468,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 4,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 4,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 1,
+              "results": 1
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 1,
+              "results": 1
+            }
+          }
+        },
+        {
+          "agent_generation": 3,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 4736,
+          "estimated_input_tokens_after": 4736,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 6,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 6,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 2,
+              "results": 2
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 2,
+              "results": 2
+            }
+          }
+        },
+        {
+          "agent_generation": 4,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5336,
+          "estimated_input_tokens_after": 5336,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 8,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 8,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 3,
+              "results": 3
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 3,
+              "results": 3
+            }
+          }
+        },
+        {
+          "agent_generation": 5,
+          "status": "within_budget",
+          "estimated_input_tokens_before": 5988,
+          "estimated_input_tokens_after": 5988,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 10,
+          "pause_reason": null,
+          "detail": null,
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 10,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 4,
+              "results": 4
+            },
+            "selected_context": {
+              "status": "passed",
+              "calls": 4,
+              "results": 4
+            }
+          }
+        },
+        {
+          "agent_generation": 6,
+          "status": "context_budget_exceeded",
+          "estimated_input_tokens_before": 7328,
+          "estimated_input_tokens_after": 7328,
+          "removed_block_count": 0,
+          "removed_message_count": 0,
+          "retained_message_count": 12,
+          "pause_reason": "context_budget_exceeded",
+          "detail": "fixed_inputs_and_minimum_interactions_do_not_fit",
+          "injected_fact_count": 0,
+          "removed_blocks": [],
+          "retained_blocks": [
+            {
+              "start": 0,
+              "end": 1,
+              "kind": "preamble",
+              "closed_by_next_user": true
+            },
+            {
+              "start": 1,
+              "end": 12,
+              "kind": "user_turn",
+              "closed_by_next_user": false
+            }
+          ],
+          "tool_pairing": {
+            "full_history": {
+              "status": "passed",
+              "calls": 5,
+              "results": 5
+            }
+          }
+        }
+      ],
+      "actual_trim_generations": 0
+    },
+    {
+      "task_id": "93",
+      "strategy": "structured_memory",
+      "group": "t93_structured_memory",
+      "run_id": "20261108T223632706573+0800_50f1c5631a_t93_structured_memory",
+      "status": "not_executed",
+      "outcome_class": "not_executed",
+      "official_reward": null,
+      "db_reward": null,
+      "scoring_valid": false,
+      "requests": 0,
+      "usage_source": "supplier_raw_response",
+      "usage_status": "partial_or_unknown",
+      "actual_tokens": null,
+      "unknown_usage_attempts": 0,
+      "tool_calls": 0,
+      "tool_errors": 0,
+      "tool_results_missing": 0,
+      "removed_blocks": 0,
+      "stored_facts": 0,
+      "active_facts": 0,
+      "injected_fact_counts": [],
+      "total_seconds": null,
+      "stop_reason": "context_budget_exceeded",
+      "source_kind": "not_executed",
+      "roles": null,
+      "estimated_cost_cny": null,
+      "supplier_bill_cny": null,
+      "cost_status": "not_applicable_not_executed",
+      "tool_sequence": [],
+      "termination_reason": null,
+      "db_unchanged": null,
+      "step_count": null,
+      "source_backed_facts": null,
+      "context_selection_events": [],
+      "actual_trim_generations": 0
+    }
+  ],
+  "strategy_aggregates": [
+    {
+      "strategy": "full_history",
+      "planned": 3,
+      "executed": 3,
+      "valid_scores": 3,
+      "successes": 1,
+      "valid_business_failures": 2,
+      "resource_stops": 0,
+      "not_executed": 0,
+      "observed_success_fraction_among_valid_scores": "1/3",
+      "requests": 38,
+      "known_tokens": {
+        "prompt_tokens": 167046,
+        "completion_tokens": 8992,
+        "total_tokens": 176038
+      },
+      "estimated_cost_cny": "0.3068004"
+    },
+    {
+      "strategy": "budget_window",
+      "planned": 3,
+      "executed": 3,
+      "valid_scores": 2,
+      "successes": 2,
+      "valid_business_failures": 0,
+      "resource_stops": 1,
+      "not_executed": 0,
+      "observed_success_fraction_among_valid_scores": "2/2",
+      "requests": 36,
+      "known_tokens": {
+        "prompt_tokens": 157289,
+        "completion_tokens": 7639,
+        "total_tokens": 164928
+      },
+      "estimated_cost_cny": "0.2831474"
+    },
+    {
+      "strategy": "structured_memory",
+      "planned": 3,
+      "executed": 2,
+      "valid_scores": 2,
+      "successes": 2,
+      "valid_business_failures": 0,
+      "resource_stops": 0,
+      "not_executed": 1,
+      "observed_success_fraction_among_valid_scores": "2/2",
+      "requests": 28,
+      "known_tokens": {
+        "prompt_tokens": 119810,
+        "completion_tokens": 6198,
+        "total_tokens": 126008
+      },
+      "estimated_cost_cny": "0.2174887"
+    }
+  ],
+  "descriptive_differences": [
+    {
+      "comparison_id": "20261108T223632706573+0800_50f1c5631a",
+      "task_id": "69",
+      "strategy": "budget_window",
+      "versus": "full_history",
+      "same_observed_reward": false,
+      "observations": {
+        "agent_input_tokens": {
+          "difference": 21538,
+          "percent_of_reference": 45.500253506844686
+        },
+        "input_tokens": {
+          "difference": 25049,
+          "percent_of_reference": 49.43751480224205
+        },
+        "output_tokens": {
+          "difference": 1561,
+          "percent_of_reference": 62.8928283642224
+        },
+        "requests": {
+          "difference": 5,
+          "percent_of_reference": 41.666666666666664
+        },
+        "seconds": {
+          "difference": 32.2048603000585,
+          "percent_of_reference": 55.810549071082086
+        }
+      },
+      "claim_limit": "单任务一次观测差异；相同Reward不证明同等过程质量，不支持稳定收益或统计显著性"
+    },
+    {
+      "comparison_id": "20261108T223632706573+0800_50f1c5631a",
+      "task_id": "69",
+      "strategy": "structured_memory",
+      "versus": "full_history",
+      "same_observed_reward": false,
+      "observations": {
+        "agent_input_tokens": {
+          "difference": 21924,
+          "percent_of_reference": 46.315700523914145
+        },
+        "input_tokens": {
+          "difference": 24889,
+          "percent_of_reference": 49.12173363858846
+        },
+        "output_tokens": {
+          "difference": 1525,
+          "percent_of_reference": 61.44238517324738
+        },
+        "requests": {
+          "difference": 5,
+          "percent_of_reference": 41.666666666666664
+        },
+        "seconds": {
+          "difference": 19.023241900024004,
+          "percent_of_reference": 32.96699832448663
+        }
+      },
+      "claim_limit": "单任务一次观测差异；相同Reward不证明同等过程质量，不支持稳定收益或统计显著性"
+    },
+    {
+      "comparison_id": "20261108T223632706573+0800_50f1c5631a",
+      "task_id": "73",
+      "strategy": "budget_window",
+      "versus": "full_history",
+      "same_observed_reward": true,
+      "observations": {
+        "agent_input_tokens": {
+          "difference": 6837,
+          "percent_of_reference": 16.562098786366608
+        },
+        "input_tokens": {
+          "difference": 8020,
+          "percent_of_reference": 18.09852639180376
+        },
+        "output_tokens": {
+          "difference": 554,
+          "percent_of_reference": 25.92419279363594
+        },
+        "requests": {
+          "difference": 2,
+          "percent_of_reference": 18.181818181818183
+        },
+        "seconds": {
+          "difference": 11.443597499863245,
+          "percent_of_reference": 22.755087788962154
+        }
+      },
+      "claim_limit": "单任务一次观测差异；相同Reward不证明同等过程质量，不支持稳定收益或统计显著性"
+    },
+    {
+      "comparison_id": "20261108T223632706573+0800_50f1c5631a",
+      "task_id": "73",
+      "strategy": "structured_memory",
+      "versus": "full_history",
+      "same_observed_reward": true,
+      "observations": {
+        "agent_input_tokens": {
+          "difference": -59,
+          "percent_of_reference": -0.14292289430973087
+        },
+        "input_tokens": {
+          "difference": -60,
+          "percent_of_reference": -0.1354004468214745
+        },
+        "output_tokens": {
+          "difference": 54,
+          "percent_of_reference": 2.526906878802059
+        },
+        "requests": {
+          "difference": 0,
+          "percent_of_reference": 0.0
+        },
+        "seconds": {
+          "difference": -1.0483874999918044,
+          "percent_of_reference": -2.0846722020281785
+        }
+      },
+      "claim_limit": "单任务一次观测差异；相同Reward不证明同等过程质量，不支持稳定收益或统计显著性"
+    }
+  ],
+  "verification": {
+    "historical_files_unchanged": true,
+    "source_files_unchanged": true,
+    "data_and_policy_files_unchanged": true,
+    "requests_ledgers_and_early_response_counts_match": true,
+    "all_requests_http_200": true,
+    "all_usage_valid": true,
+    "all_output_budgets_verified": true,
+    "all_actual_request_parameters_frozen": true,
+    "all_retries_zero": true,
+    "tool_ids_unique_and_results_paired": true,
+    "all_fee_entries_settled_and_recomputed": true,
+    "no_judge_or_review": true
+  },
+  "historical_files_verified": 6,
+  "evidence_hashes": {
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/suite_summary.json": "eafcc668395e785cab02c4158fa98d3e24ef847a30bf01c82c028f52820859d6",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/comparison_request_ledger.json": "c7cbc866f0d4f45bfe502d07cc60ea2d5c9ae423a1214c69cfba83355e2afce7",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/effective_plan.json": "6fcdf82e159fbdb8ae546063435a88fe70187face96f237dfb7b1a400337c65d",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/gate_8.json": "9d97dda035ed7ad52045381ec78a688fca67146039b3283db2846fba4c72d8db",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_full_history/summary.json": "a1134419871a47124914a683749840a4ca9ce019d67ee70dcd2a59648add67e0",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_full_history/trajectory.json": "efbc37b419de354cc2a064150b9993236207846558a1d513f1b67af97232ae4a",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_full_history/request_ledger.json": "7cf935e9c3b3ff0dfd7583810931926e1beccb4f16fb9dd7950685d765f301bf",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_full_history/model_responses.json": "b780f19d2ff1ae33117905b7e8d9161e74df33d54934ad0618c76fa6651b36aa",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_full_history/agent_state.json": "054475a60ecaa95a8c770f4452f3f743fd29f519694eb9db507664a54a5cee7d",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_full_history/context_audit.json": "6f3464fa76efc7893f5fc84d6991598d154e16753369c6cfb78a24ff39ec4e30",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_full_history/tool_events.json": "933dde8a13f8c4b3bf801fd0184232e2ca9006a5c7e11b374befc9fe97ef36ee",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_full_history/official_reward.json": "140f7c85d8768dac6080ec775cc23a3ee717ed1304cb38232b937c7268c48de6",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_budget_window/summary.json": "0becfd7824f75b9000981dba4c8ff3b915ead376a36ba48eb965bfd09dbd7b6d",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_budget_window/trajectory.json": "8eba4610e7219e001e0ed0446fe535864a2513da90436fe9974dbf114f88125b",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_budget_window/request_ledger.json": "353f0b16c2b7b63c19adb7aac6fb0bd3124ac4bd1ec117e866cd026edc25afc7",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_budget_window/model_responses.json": "0c388fa48cf7eedc3b37e733d1ad4218aa81084fc4ddd05ba2c27eaff901a107",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_budget_window/agent_state.json": "feb1d6425706ae82250348d444b5df46073054ce5142e1c586607b6c8edee183",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_budget_window/context_audit.json": "6b4fd3b546478cee9c439e48aabefcc504e9300af6640ce37507baeea7eb2f89",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_budget_window/tool_events.json": "498ee74c2df3191fe361d357ba0932e4876ee4a7a82c9c111b3efdf101eb7671",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_budget_window/official_reward.json": "16d72b5248954635f98ee60702ce090af7b7e74d16cd86a1603f5e59d76eb853",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_structured_memory/summary.json": "c800cea1b6dfcf0e3c0f9a7b689b75437460eb202fd8f78c143774538adad0f6",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_structured_memory/trajectory.json": "fba5923e0368065da0d97b0eb227a325698e3ef0d976a831bec691a4faf69ad6",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_structured_memory/request_ledger.json": "33023ee99a741d4387699f83e9fc4332786664104b3cc9e84796a8f6d7a1c2ed",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_structured_memory/model_responses.json": "e84f4972d081b8439ce81a84fbc9d6a321c38615b5e2b2ca3f8b42feca7a68b1",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_structured_memory/agent_state.json": "7683023f25d874c3504ffaaa3e59c310cb009b6279ad0c1a80ba23a39566f25e",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_structured_memory/context_audit.json": "ea007f80218d361ab8af99b090b93f608077ac730122128bea5d0ef54b715b25",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_structured_memory/tool_events.json": "09d982e52708c49017b91786ce0945d0a01c0705f0847cf358957c2bee129a7f",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t69_structured_memory/official_reward.json": "16d72b5248954635f98ee60702ce090af7b7e74d16cd86a1603f5e59d76eb853",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_full_history/summary.json": "d3cffa2de2e0374d6666294172574f70c99eac69553203854436597ffdecfb9e",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_full_history/trajectory.json": "71af0f372db5e09fd076a17ed07ea0b7ea791bdd6654bde0dccd777dca14f0ab",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_full_history/request_ledger.json": "ad01c7f2e8d08fbcde88376fd53e5d4744b844833e5a3a230aba1cae515c929a",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_full_history/model_responses.json": "556cc2f5932ff2a438620179051967d6683ea8f71d89a5685504c6458bb6e710",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_full_history/agent_state.json": "1b1ddb71c7e791328ca2ea5c518f5e088c64c91a7a517a590b671c857aa5cc26",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_full_history/context_audit.json": "168743e58b703222103550535330a3f8073016a164bc23407c77378553809f77",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_full_history/tool_events.json": "67ac371ea772ff3d82583cd8df31efa26c4130b23f8dd879c1aa689f4ec73bc9",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_full_history/official_reward.json": "8bb32c19b41394a2bb8e2a37666457c1c055e73bf946cd417a1da24981ab7640",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_budget_window/summary.json": "1209b8a6a718e886d3fd723ed7d0c0c50ff844a5f5987da2084e2ffe315bc3e9",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_budget_window/trajectory.json": "5c6d0a1ba4d724bb0c46440d9503070985924d5bfd59a2f1a3dc044b7a2c5539",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_budget_window/request_ledger.json": "0434a03a3e3afecccae469d40f613c69a063ba000888b4e995196c10575edad0",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_budget_window/model_responses.json": "6f50fa2355fbf92ee27799f926427749952b6b4379862ac2c6827866bb62b6ab",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_budget_window/agent_state.json": "9a9ba58264a7dad80308c333cafce7f799d42c0aaa867de4eed6d7a743ceda5a",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_budget_window/context_audit.json": "ec9792cd97c7bd58c325d31bab24890bad98f62377bf41d0252774f3db429346",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_budget_window/tool_events.json": "9f1e0aff61870e8c8f36e4e49797aad0109771a0e46f99d59032ba9d632898ca",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_budget_window/official_reward.json": "8bb32c19b41394a2bb8e2a37666457c1c055e73bf946cd417a1da24981ab7640",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_structured_memory/summary.json": "783d62032bda3910fa8623013a5e2707a85bc427a7d848d875ff94cfa9330219",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_structured_memory/trajectory.json": "34246e177d392a85c2141a2d8bf5aaea42e3434c3c7c1c44b1a8a9300e3a58a4",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_structured_memory/request_ledger.json": "379d9969f7377a3e6a1e2a6f29aa4cb05a5e412646956d72645ad0a18655840d",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_structured_memory/model_responses.json": "be3a1061f228a7c7cedeea52d4d9dac8332349809eebe89c786bc8b158e7fc69",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_structured_memory/agent_state.json": "8f1697bf613677ef2e65d26768bffdbb1bcf6807e98539316a3043b7f0c66c0b",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_structured_memory/context_audit.json": "0e7fc1e28966d4da83fa2da3f07653a14527941a035b11ad0a3f557a4b24e993",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_structured_memory/tool_events.json": "9c91e9130748b391d105f0847ed8ac9054cc0aa884c26e1bf283727fde691ff5",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t73_structured_memory/official_reward.json": "8bb32c19b41394a2bb8e2a37666457c1c055e73bf946cd417a1da24981ab7640",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_full_history/summary.json": "89643963b26a788c6e75ae4933b364daf972374bd4436715325565fe0b6ddcd0",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_full_history/trajectory.json": "08996ff6ded3e20b8bcbd09047c4152448865e9fa81f5d95cd86c38fcf3c6676",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_full_history/request_ledger.json": "6acdefd811ee083d75c66fade1edef5ec6c3a2a73be3a3178e14a9259a3b8e28",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_full_history/model_responses.json": "a6f285f9aa036a00fc0c795c913344c80ab9b6d714a0b713eb12626a628ec43b",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_full_history/agent_state.json": "575c20b6f44448714c23a2cccbd59983876bb05583574c2d2e7cbe5b932c822a",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_full_history/context_audit.json": "8d7b34f58441136e43e88602c4484dff151cf577e63108fab79407e23e7fa36b",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_full_history/tool_events.json": "71ae1f323b9d13bc7a0213141614f30da32409f5ad6a5188b25e6836ed650ee5",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_full_history/official_reward.json": "720892c1e2450a4f5e39a935ad3b4d7d08c3ea7a6806b62e986cdde8877fef43",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_budget_window/summary.json": "5930aefefe83ef0acd67814a5fde437de25a97d5be2e8e4438ed4fd1882a3f6f",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_budget_window/trajectory.json": "e99dd89a61f33a7e4cd53f7a1a49661042a0e63673701f9a7c62ce1c2324fc78",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_budget_window/request_ledger.json": "f7d1d9a7bc937fdb033e4975d9bb54c0c96098e7a2d6308828d92b148e351d98",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_budget_window/model_responses.json": "920574553bf7a00ba4b60f9742a1ad8c9b488116d0ecf0051d04630adf371a63",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_budget_window/agent_state.json": "a6df05c207de9d98b0cef47701f3d776a2bad977f1c7ca2036eedb3763bd477a",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_budget_window/context_audit.json": "988be641653feedbb79152b78870a25c3687757786b351f8eef9dad12d4d4aca",
+    "validation/phase1_comparison/20261108T223632706573+0800_50f1c5631a/live_execution/t93_budget_window/tool_events.json": "61e58c9b71382265a5b95e069364828d1da24c584e5832b215bce54471e24054"
+  },
+  "claim_limits": [
+    "One trial per task/strategy; no statistical significance or stable performance claim.",
+    "FullHistory has no input cap; bounded strategies use 7168/128. This is an engineering trade-off comparison.",
+    "User dialogue diverged despite the same seed rule. Reward differences cannot be attributed solely to memory.",
+    "Resource-stopped and unexecuted groups have null Reward/DB; lower consumption does not mean an optimization win.",
+    "Local cl100k_base estimates are not supplier Qwen tokens. Reasoning tokens are included in completion_tokens, not added twice.",
+    "Historical and Mock data are not included. Raw transcripts, credentials, provider request IDs and request ledgers are not included in these public files."
+  ]
+}
