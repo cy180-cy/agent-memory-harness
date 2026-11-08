@@ -278,8 +278,64 @@ def export_results(folders, output):
     return report
 
 
+def _render_public_demo(path, task_id=None):
+    """Display published derived metrics without needing private request ledgers."""
+    report = read_json(path)
+    if report.get("schema") != "phase1-07-2-sanitized-evaluation-v1":
+        raise ValueError("Unsupported public Demo summary schema")
+    rows = report["rows"]
+    if not rows or any(r.get("source_kind") not in ("real", "not_executed") for r in rows):
+        raise ValueError("Public real-result Demo cannot relabel Mock or unknown sources")
+    tasks = list(dict.fromkeys(r["task_id"] for r in rows))
+    selected = str(task_id) if task_id is not None else tasks[0]
+    if selected not in tasks:
+        raise ValueError("任务不在结果中，可选: " + ", ".join(tasks))
+    lines = ["Agent Memory Harness｜公开离线Demo",
+             "来源：已保存真实实验的脱敏派生结果；本次仅展示，不重新计算官方评分。",
+             "不读取API Key，不调用模型；没有Mock结果混入。",
+             "可选任务: " + ", ".join(tasks), "当前任务: " + selected]
+    labels = {"completed_success": "业务成功", "business_failure": "有效业务失败",
+              "resource_stop": "资源停止，未评分", "not_executed": "未执行"}
+    for row in (r for r in rows if r["task_id"] == selected):
+        score = row["official_reward"] if row["scoring_valid"] else "未评分"
+        db = row["db_reward"] if row["scoring_valid"] else "未评分"
+        lines += ["", "策略: " + row["strategy"],
+                  f"状态: {labels.get(row['outcome_class'], row['outcome_class'])}；Reward={score}；DB={db}"]
+        if row["status"] == "not_executed":
+            lines.append("前序门控阻止启动；请求=0；Token/费用不适用，不能记为业务失败。")
+            continue
+        if row["strategy"] == "full_history":
+            lines.append("上下文：保留完整Agent可见历史，没有窗口裁剪。")
+        for event in row.get("context_selection_events", []):
+            before = event["estimated_input_tokens_before"]
+            after = event["estimated_input_tokens_after"]
+            lines.append(f"  Agent上下文#{event['agent_generation']}: {before} → {after}（本地估算）；"
+                         f"{event['status']}；删除块={event['removed_block_count']}；注入事实={event['injected_fact_count']}")
+            if event["removed_block_count"] or event["pause_reason"]:
+                spans = [(b["start"], b["end"]) for b in event.get("retained_blocks", [])]
+                lines.append(f"  保留原始消息区间[start,end): {spans}；工具配对={event['tool_pairing']}")
+        facts = row.get("source_backed_facts")
+        if facts:
+            lines.append(f"结构化状态：事实={facts['fact_count']}；均有来源={facts['all_facts_have_sources']}；"
+                         f"版本状态={facts['fact_status_counts']}（不等于全部注入提示词）。")
+        lines.append("工具轨迹（仅名称）: " + " → ".join(row["tool_sequence"]))
+        usage = row.get("actual_tokens")
+        if usage:
+            lines.append(f"供应商usage：输入={usage['prompt_tokens']}；输出={usage['completion_tokens']}；"
+                         f"总计={usage['total_tokens']}；请求={row['requests']}；工具错误={row['tool_errors']}")
+        lines.append(f"耗时={row['total_seconds']:.2f}秒；费用估算=¥{row['estimated_cost_cny']}；供应商账单=unknown")
+        if row.get("stop_reason"):
+            lines.append("停止原因: " + row["stop_reason"])
+    lines += ["", "读图提示：train69两次裁剪均在取消成功之后；train73未证明节省；train93有资源停止和未执行。",
+              "原始轨迹不随此公开摘要分发；事实来源示例和讲解见docs/demo_zh.md。",
+              "每组一次的小样本；未完成任务的低Token不是优化收益。本次真实API请求=0。"]
+    return "\n".join(lines)
+
+
 def render_demo(folder, task_id=None):
     """Read-only Chinese CLI replay. Never display the hidden user prompt."""
+    if Path(folder).is_file():
+        return _render_public_demo(folder, task_id)
     rows = collect(folder)
     tasks = list(dict.fromkeys(r["task_id"] for r in rows))
     selected = str(task_id) if task_id is not None else tasks[0]

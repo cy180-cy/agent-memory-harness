@@ -77,7 +77,7 @@ def main():
     modes.add_argument("--execute",action="store_true")
     modes.add_argument("--status",type=Path,help="Read an immutable monitor snapshot from a run's live_execution folder")
     modes.add_argument("--export", dest="export_paths", type=Path, nargs="+", help="Export saved runs to CSV/JSON/Chinese Markdown; no model calls")
-    modes.add_argument("--demo", type=Path, help="Read-only Chinese CLI replay of saved results")
+    modes.add_argument("--demo", type=Path, help="Read-only Chinese replay of local evidence or a public metrics JSON")
     parser.add_argument("--suite", action="store_true", help="Prepare or Mock the fixed three-strategy Retail matrix; old A/B default is retained")
     parser.add_argument("--phase1-07", action="store_true", help="Prepare the approved task scope with CNY reservations; does not authorize live execution")
     parser.add_argument("--task-ids", nargs="+", help="With --suite, subset of fixed train tasks 34 69 73 93")
@@ -126,8 +126,10 @@ def main():
     if args.demo is not None or args.export_paths is not None:
         from memory_comparison.results import export_results, render_demo
         paths = [args.demo] if args.demo is not None else args.export_paths
-        if any(not p.resolve().is_relative_to(ROOT/"validation") for p in paths):
-            raise PermissionError("Replay/export is limited to project B validation evidence")
+        public_demo = (args.demo is not None and args.demo.suffix == ".json"
+                       and args.demo.resolve().is_relative_to(ROOT/"docs/experiments"))
+        if not public_demo and any(not p.resolve().is_relative_to(ROOT/"validation") for p in paths):
+            raise PermissionError("Replay/export requires validation evidence; public Demo reads docs/experiments JSON only")
         if args.demo is not None:
             print(render_demo(args.demo, args.task))
         else:
