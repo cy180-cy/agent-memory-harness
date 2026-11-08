@@ -244,3 +244,7 @@ data/simulations/.credentials/
 /validation/run_offline_tests.py
 /Phase0_Official_Baseline_Run_Plan.md
 /Phase1A_01_Code_Review.md
+
+# Personal explanation and interview preparation: keep local, never publish.
+/docs/demo_zh.md
+/docs/resume_project_zh.md

@@ -1,257 +1,125 @@
-# Agent Memory Harness｜任务内记忆与可追溯评测
+# Agent Memory Harness
 
-本项目在 Sierra Research 的 τ-bench 上实现可替换的任务内记忆策略，复用上游 Agent、
-User Simulator、Retail 工具、任务数据和评分器。固定上游来源为
-`fc0055dc4e0a316c3f83133267fbd6faaa770992`；完整上游 Git 历史、下方原始说明与
-[MIT 许可证](LICENSE) 保留。
+**智能体记忆管理与任务执行优化（τ-bench）**：在真实工具交互中比较完整历史、预算滑窗和带来源的结构化记忆，并保留可核对的上下文、资源停止与官方评分证据。
 
-- `full_history`：完整历史基线，不裁剪、不新增记忆提示词。
-- `budget_window`：在输入预算内保留完整交互块及工具调用/返回配对。
-- `structured_memory`：从 Agent 可见消息和工具数据维护带来源的事实、确认边界与冲突状态。
-- 统一执行器记录请求账本、资源停止、模型可见上下文及官方评分，导出 JSON、CSV 和中文摘要；提供离线命令行回放。
+这是一个基于 Sierra Research [tau2-bench](https://github.com/sierra-research/tau2-bench) 的个人工程与探索性实验项目。重点是**可替换的任务内记忆、受控模型调用、可解释的评测结果**，不是重新实现基准环境，也未证明普遍性能提升。
 
-当前是工程验证项目。Mock 回放不等于真实 Agent 成功率；三策略尚无完整、可信的真实对比结论。
-StructuredMemory 在一个已保存的 train34 前缀中仍触发输入预算停止，未以删减必要信息或提高预算掩盖该限制。
-本地 Token 估算、供应商 usage、未知费用分别记录，不声称已证明性能或成本提升。
+[完整实验报告](docs/final_experiment_report_zh.md) · [离线Demo命令](#环境与离线demo) · [架构说明](docs/architecture.md)
 
-## 离线使用
+## 已完成的第一版
 
-先按下方上游安装说明准备 Python 3.12/3.13 和项目依赖。在仓库根目录 PowerShell 中执行：
+- 实现 `MemoryStrategy` / `MemoryState` 与可注册的 `MemoryAgent`，复用上游生成和工具执行链路。
+- 同一入口选择 `full_history`、`budget_window`、`structured_memory`；每个任务/trial状态独立，完整原始轨迹与模型可见上下文分离。
+- 支持输入预算检查、工具调用/返回配对、事实来源与版本审计，以及独立的总输出预算检查。
+- 建立发送前持久请求计数、金额预留、零自动重试、消费授权绑定和安全停止机制；输出CSV/JSON及中文分析。
+- 已取得三任务真实小样本：计划9组，7组有效评分、1组资源停止、1组未执行；102次真实请求、40次工具调用。
+
+## 上游与个人开发边界
+
+| 复用上游 | 本项目新增/接入 |
+|---|---|
+| Retail任务、数据库、政策、业务工具 | MemoryStrategy、MemoryAgent、三种任务内记忆策略 |
+| LLMAgent、UserSimulator、Orchestrator、消息模型 | 最小上下文扩展点与registry注册；原普通Agent保持原有默认行为 |
+| 官方动作/数据库/NL评分逻辑 | 评分有效性记录、资源停止分类、三策略编排及指标导出 |
+| 模型消息转换基础与LiteLLM调用 | 千问兼容适配、离线回放、输入/输出预算与持久账本 |
+
+固定上游来源提交：`fc0055dc4e0a316c3f83133267fbd6faaa770992`。项目使用该仓库的`tau2`包1.0.1；名称沿用τ-bench，不声称使用或复现论文全部模型配置。保留完整上游Git历史、[原始上游README](README.upstream.md)、[MIT许可证与Sierra Research版权](LICENSE)，不将上游能力写成个人原创。
+
+## 架构与记忆插入位置
+
+```mermaid
+flowchart LR
+  T[Retail任务] --> U[上游User Simulator]
+  U --> A[MemoryAgent / 上游Agent生命周期]
+  A --> M["MemoryStrategy<br/>任务内独立状态"]
+  M --> C[本轮模型可见上下文]
+  P[系统政策与工具定义] --> C
+  C --> L["LiteLLM与千问适配<br/>请求/费用/输出预算"]
+  L --> O[上游Orchestrator]
+  O --> R[官方Retail工具 / 独立内存DB]
+  R -->|ToolMessage| A
+  O --> E[官方评分]
+  E --> X[真实usage / 上下文审计 / 结果分析]
+```
+
+MemoryStrategy仅在下一次Agent生成前选择上下文：FullHistory返回完整可见历史；BudgetWindow移除完整旧块；StructuredMemory在必要时注入带来源的旧事实。系统政策、工具定义不由记忆策略改写；隐藏用户情境和金标只进入上游各自职责，不传给Memory。完整数据流见[架构说明](docs/architecture.md)。
+
+## 三种策略
+
+| 策略 | 上下文行为 | 边界 |
+|---|---|---|
+| `full_history` | 保留消息顺序、内容与工具ID，不摘要、不裁剪、不添加记忆提示 | 完整历史参考基线，不是优化结果 |
+| `budget_window` | 以用户交互为块，保护近期完整块和工具配对，超限时从最旧可移除块删除 | 当前完整块过大时停止；不截断工具JSON |
+| `structured_memory` | 维护用户原文、实体字段、操作与来源；超限时选择紧凑事实与近期块 | 确定性提取；无通用自然语言语义理解，无额外模型调用 |
+
+有界策略使用输入预算7,168、本地安全余量128。计数器是完整请求视图上的本地`cl100k_base`估算，不是千问原生计费Token。FullHistory不暗中套用同一裁剪目标，因此这里比较的是**工程取舍**，不是相同输入预算下的能力。
+
+StructuredMemory保留事实版本与来源，旧值标记superseded，未解决冲突保留不确定性。普通“Yes”不会自动变成所有操作的授权；自然语言无法可靠解析时保持原文。详细规则见[接口与滑窗](docs/memory_strategy.md)、[结构化记忆](docs/structured_memory.md)。
+
+## 源码导航
+
+```text
+src/tau2/agent/
+  memory.py                    # 协议、会话状态、FullHistory
+  memory_agent.py              # 上游生命周期中的上下文接入
+  budget_window.py             # 完整交互块与输入预算停止
+  structured_memory.py         # 事实、来源、版本与紧凑注入
+  input_tokens.py              # 完整输入的本地估算
+validation/
+  run_memory_comparison.py     # 统一入口：计划 / Mock / Demo / 导出 / 授权执行
+  memory_comparison/           # 配置、编排、账本、费用与结果分析
+  runtime_support/             # LiteLLM适配、输出预算、离线防护
+  repository_state.py         # 固定上游来源与当前开发身份
+tests/fixtures/memory/         # 冻结对照、合成及标注来源的回放摘录
+docs/experiments/              # 允许公开的脱敏实验汇总
+```
+
+## 环境与离线Demo
+
+要求Python **>=3.12,<3.14**。依赖以[pyproject.toml](pyproject.toml)为准；当前核验环境为Windows / Python3.12.14、tau2 1.0.1、LiteLLM1.82.6、OpenAI SDK3.24.0、HTTPX0.28.1、tiktoken0.14.0。无需向量库、模型训练或额外服务。依赖版本范围不保证未来解析结果完全相同，真实实验版本已记录在结果JSON。
+
+新检出可按[上游安装说明](README.upstream.md#quick-start)准备依赖，例如`uv sync`；本次交付没有安装或升级依赖。以下命令在仓库根目录、已有`.venv`下运行，**无需Key、不联网、不重跑任务**：
 
 ```powershell
-# 三策略固定 Mock 回放；不读取真实 Key，不发送真实 API 请求
-& .\.venv\Scripts\python.exe -X utf8 -B validation/run_memory_comparison.py --suite --mock --task-ids 34
+# 默认展示train69；读取Git中已有脱敏真实结果
+& .\.venv\Scripts\python.exe -X utf8 -B validation/run_memory_comparison.py --demo docs/experiments/phase1_07_2_20261108/metrics.json --task 69
 
-# 将 $run 设为上一命令输出的 artifacts 目录，再查看 Demo 或导出
-& .\.venv\Scripts\python.exe -X utf8 -B validation/run_memory_comparison.py --demo $run --task 34
-& .\.venv\Scripts\python.exe -X utf8 -B validation/run_memory_comparison.py --export $run
+# 展示资源停止与未执行的区别
+& .\.venv\Scripts\python.exe -X utf8 -B validation/run_memory_comparison.py --demo docs/experiments/phase1_07_2_20261108/metrics.json --task 93
 ```
 
-正式源码与必要测试样本已使用稳定目录；历史时间戳目录不属于克隆后运行所需文件。
-默认入口只准备离线计划。真实模型执行必须另外提供绑定实验身份的新授权，旧授权不能重复消费。
-不要将 API Key、私有环境配置或真实请求账本提交到 Git。
+可将`--task`设为73。macOS/Linux使用对应虚拟环境的Python路径；本轮只在上述Windows环境核验。公开Demo展示派生指标、上下文变化和工具名称；**不包含原始请求账本或未脱敏对话**。本机证据回放与导出命令见[统一评测说明](docs/memory_evaluation.md)。不需要复制作者的历史时间戳目录才能展示公开结果。
 
-参见 [记忆接口与窗口策略](docs/memory_strategy.md)、[结构化记忆](docs/structured_memory.md)、
-[统一评测与复跑说明](docs/memory_evaluation.md)。
+## 真实实验结果摘要
 
----
+2026-11-08，Retail train69/73/93，每种策略各计划1次。运行代码`3bd27666`，结果提交`50d1b730`。实际7组有效评分：5成功、2业务失败；另1组预算停止、1组未执行。
 
-以下为保留的上游项目说明。
+| 策略 | 有效评分中的成功数 | 资源停止 | 未执行 | 已消耗总Token |
+|---|---|---:|---:|---:|
+| FullHistory | 1 / 3 | 0 | 0 | 176,038 |
+| BudgetWindow | 2 / 2 | 1 | 0 | 164,928 |
+| StructuredMemory | 2 / 2 | 0 | 1 | 126,008 |
 
-# $\tau$-Bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains
+分母与完成范围不同，不能直接用合计Token或这些比例排名。累计102次真实请求，输入444,145、输出22,829，共**466,974 Token**；按指定单价估算**¥0.8074365**，供应商实际账单unknown。思考Token已包含在输出中。
 
-[![python](https://img.shields.io/badge/Python-3.12%2B-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![arXiv](https://img.shields.io/badge/cs.AI-arXiv%3A2506.07982-B31B1B.svg?logo=arxiv&logoColor=red)](https://arxiv.org/abs/2506.07982)
-[![blog](https://img.shields.io/badge/blog-tau--bench-green)](https://sierra.ai/blog/benchmarking-agents-in-collaborative-real-world-scenarios)
-[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/sierra.svg?style=social&label=Follow%20%40SierraPlatform)](https://x.com/SierraPlatform/status/1932464265207889974)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/posts/sierra_last-year-we-introduced-%F0%9D%9C%8F-bench-a-benchmark-activity-7338229693898231809-F8L4?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAdc8goBmhEsiEo1_t_XSJbAnY4_zMfAWcE)
-[![Leaderboard](https://img.shields.io/badge/🏆_Live_Leaderboard-taubench.com-brightgreen?style=flat)](https://taubench.com)
+- train69的FullHistory在用户确认同时发出结束标记后停止，取消尚未执行。两种有界策略成功，但裁剪均发生在取消成功之后。
+- train73三组均成功且未触发裁剪，没有证明显著节省。
+- train93的BudgetWindow因`7,328 + 128 > 7,168`在发送前停止；现有门控阻止其后的StructuredMemory，后者不能计为失败。
 
-<div align="center">
-<img src="figs/traj.png" width="95%" alt="Trajectory">
-</div>
+[完整分析](docs/final_experiment_report_zh.md) · [原阶段报告](docs/experiments/phase1_07_2_20261108/report_zh.md) · [CSV](docs/experiments/phase1_07_2_20261108/metrics.csv) · [JSON](docs/experiments/phase1_07_2_20261108/metrics.json)
 
-<div align="center">
-<h3>🚀 τ³-bench is here!</h3>
-<p>From text-only to multimodal, knowledge-aware agent evaluation.<br>
-Voice full-duplex · Knowledge retrieval · 75+ task fixes<br>
-<a href="https://arxiv.org/abs/2603.13686">τ-Voice paper</a> · <a href="https://arxiv.org/abs/2603.04370">τ-Knowledge paper</a> · <a href="https://arxiv.org/abs/2512.07850">Task fixes paper</a> · <a href="https://github.com/sierra-research/tau2-bench/releases/tag/v1.0.0">Release notes</a></p>
-</div>
+## 授权、费用与复现边界
 
-> **How do you say $\tau^3$-bench?** We just say "tau three," but you do you!
+默认入口只准备离线计划；Mock使用固定响应，不是自主模型效果实验。真实执行必须有新授权，绑定当前代码/补丁、数据指纹、comparison_id和请求上限，消费记录持久保存，旧授权不能重启清零。公开Demo不会创建或恢复授权。
 
-## What's New in $\tau^3$-bench
+实验采用Agent `qwen3.7-plus`（总输出3072、thinking_budget1536）、User `qwen3.8-flash`（总输出1024），temperature=0，内部seed42，未向供应商传seed；相同配置也可能产生不同对话。每组20请求/30步/300秒、全局180请求，HTTP阶段30秒；SDK/HTTP/任务重试0，Judge/Review0。
 
-> **📢 July 2026 — v1.0.1 grading update:** This release fixes a couple of `banking_knowledge` task errors. Scores on that domain change as a result — **results produced with tau2-bench < 1.0.1 are not comparable with >= 1.0.1**, and affected leaderboard submissions have been re-graded. Old results files can be re-scored with `tau2 evaluate-trajs --fresh-tasks`; to reproduce pre-fix behavior, pin the [`pre-v1.0.1`](https://github.com/sierra-research/tau2-bench/releases/tag/pre-v1.0.1) tag. Details in the [changelog](CHANGELOG.md) and [release notes](RELEASE_NOTES.md). Other domains are unaffected.
+发送前预留请求名额与费用：输入估算加20%，输出按总上限；响应后以供应商usage结算。超时、失败、usage未知或持久化异常不返还名额并暂停；响应先保存再检查输出预算，超额/截断不继续执行工具。¥10是该次本地估算停止线，不是供应商硬封顶。已验证的网络路径与定价配置有环境依赖，不能宣称任意电脑直接复现收费结果。
 
-- **Knowledge Domain (`banking_knowledge`)** — A knowledge-retrieval-based customer service domain with configurable RAG pipelines, document search, embeddings, and agentic shell-based search. [Learn more →](src/tau2/knowledge/README.md)
-- **Voice Full-Duplex (Audio Native)** — End-to-end voice evaluation with realtime providers (OpenAI, Gemini, xAI). [Learn more →](src/tau2/voice/README.md)
-- **Task Quality (75+ fixes)** — Removed incorrect expected actions, clarified ambiguous instructions, fixed impossible constraints, and added missing fallback behaviors across airline, retail, and banking domains. Based on analysis from [SABER](https://arxiv.org/abs/2512.07850) (Cuadron et al., 2025). [Learn more →](https://taubench.com/blog/tau3-task-fixes.html)
-- **Updated Leaderboard** — Now includes voice and knowledge results. Compare model performance at [taubench.com](https://taubench.com). [Submit your results →](docs/leaderboard-submission.md)
+凭据只由现有执行入口在授权通过后读取`AMH_QIANWEN_API_KEY`，不进入源码或日志；离线入口对子进程使用环境白名单。私有Key、历史授权、原始响应和账本均被Git排除。真实执行流程详见[统一评测说明](docs/memory_evaluation.md)，本README不附可复用的收费授权。
 
-See [CHANGELOG.md](CHANGELOG.md) for the full version history.
+## 已知限制
 
-> **Backward compatibility note**: If you are evaluating an agent (not training), use the `base` task split to evaluate on the complete task set that matches the original τ-bench structure. This is the default.
+这是一组3任务、每组合1次的探索性数据，缺1组且有资源停止，不能宣称统计显著性、稳定成功率提升或普遍成本下降。User Simulator提前结束、完整工具交互块不可继续压缩、自然语言事实只做保守记录，都是当前真实限制。
 
-> **Upgrading from $\tau^2$-bench?** Installation now uses `uv` instead of `pip install -e .`, and Python `>=3.12, <3.14` is required (was `>=3.10`). Some internal APIs have been refactored — see [CHANGELOG.md](CHANGELOG.md) for details.
-
-## Overview
-
-$\tau$-bench is a simulation framework for evaluating customer service agents across multiple domains. It supports text-based half-duplex (turn-based) evaluation and voice full-duplex (simultaneous) evaluation using real-time audio APIs.
-
-Each domain specifies:
-- A **policy** that the agent must follow
-- A set of **tools** that the agent can use
-- A set of **tasks** to evaluate the agent's performance
-- Optionally: a set of **user tools** for the user simulator
-
-**Available domains**: `mock` · `airline` · `retail` · `telecom` · `banking_knowledge`
-
-| Mode | Description |
-|------|-------------|
-| **Text (half-duplex)** | Turn-based chat with tool use |
-| **Voice (full-duplex)** | End-to-end audio via realtime providers (OpenAI, Gemini, xAI) |
-
-## Quick Start
-
-### 1. Install
-
-```bash
-git clone https://github.com/sierra-research/tau2-bench
-cd tau2-bench
-uv sync                        # core only (text-mode: airline, retail, telecom, mock)
-```
-
-Optional extras (install what you need):
-
-```bash
-uv sync --extra voice          # + voice/audio-native features
-uv sync --extra knowledge      # + banking_knowledge domain (retrieval pipeline)
-uv sync --extra gym            # + gymnasium RL interface
-uv sync --extra dev            # + pytest, ruff, pre-commit (required for contributing)
-uv sync --all-extras           # everything
-```
-
-This requires [uv](https://docs.astral.sh/uv/getting-started/installation/). Voice features also need system dependencies (`brew install portaudio ffmpeg` on macOS). See the [full installation guide](docs/getting-started.md) for details.
-
-### 2. Set up API keys
-
-```bash
-cp .env.example .env
-# Edit .env with your API keys (uses LiteLLM — any supported provider works)
-```
-
-### 3. Run an evaluation
-
-```bash
-tau2 run --domain airline --agent-llm gpt-4.1 --user-llm gpt-4.1 \
-  --num-trials 1 --num-tasks 5
-```
-
-Results are saved to `data/simulations/`. Use `tau2 view` to browse them.
-
-> **Tip**: Run `tau2 intro` for an overview of available domains, commands, and examples.
-
-## Documentation
-
-### Getting Started
-
-| Document | Description |
-|----------|-------------|
-| [Getting Started](docs/getting-started.md) | Installation, API keys, first run, output structure, configuration |
-| [CLI Reference](docs/cli-reference.md) | All `tau2` commands and options |
-
-### Core Concepts
-
-| Document | Description |
-|----------|-------------|
-| [Agent Developer Guide](src/tau2/agent/README.md) | Build and evaluate your own agent |
-| [Domains](src/tau2/domains/README.md) | Domain structure, data format, and available domains |
-| [Orchestrator & Communication Modes](src/tau2/orchestrator/README.md) | Half-duplex and full-duplex orchestration |
-| [Task Schema & Evaluation](docs/evaluation.md) | What `evaluation_criteria.actions` means, how `reward_basis` gates the reward, and how to inspect action correctness |
-
-### Knowledge Retrieval
-
-| Document | Description |
-|----------|-------------|
-| [Knowledge Retrieval](src/tau2/knowledge/README.md) | Retrieval pipeline configs, embeddings, RAG, and sandbox setup for the `banking_knowledge` domain |
-
-### Voice & Audio
-
-| Document | Description |
-|----------|-------------|
-| [Voice (Full-Duplex)](src/tau2/voice/README.md) | Providers, speech complexity, CLI options, and output structure for voice evaluation |
-| [Audio Native Architecture](src/tau2/voice/audio_native/README.md) | Internal architecture for adding or modifying realtime provider adapters |
-
-### RL & Training
-
-| Document | Description |
-|----------|-------------|
-| [Gym Interface](src/tau2/gym/README.md) | Gymnasium-compatible environment, play mode, train/test splits |
-
-### Leaderboard & Experiments
-
-| Document | Description |
-|----------|-------------|
-| [Leaderboard Submission](docs/leaderboard-submission.md) | How to submit results to [taubench.com](https://taubench.com) |
-| [Experiments](src/experiments/README.md) | Experimental features and research code |
-
-### Project
-
-| Document | Description |
-|----------|-------------|
-| [Contributing](CONTRIBUTING.md) | How to contribute to τ-bench |
-| [Changelog](CHANGELOG.md) | Version history and release notes |
-
-## Contributing
-
-We welcome contributions! Whether you're fixing bugs, adding features, creating domains, or contributing research code, see our [Contributing Guide](CONTRIBUTING.md) for guidelines.
-
-## Citation
-
-If you use a specific component of $\tau^3$-bench, please cite the corresponding paper below.
-
-### Knowledge Domain (`banking_knowledge`)
-
-```bibtex
-@article{shi2026tau,
-  title={$\tau$-Knowledge: Evaluating Conversational Agents over Unstructured Knowledge},
-  author={Shi, Quan and Zytek, Alexandra and Razavi, Pedram and Narasimhan, Karthik and Barres, Victor},
-  journal={arXiv preprint arXiv:2603.04370},
-  year={2026}
-}
-```
-
-### Voice Full-Duplex Benchmark
-
-```bibtex
-
-@misc{ray2026tauvoicebenchmarkingfullduplexvoice,
-      title={$\tau$-Voice: Benchmarking Full-Duplex Voice Agents on Real-World Domains},
-      author={Soham Ray and Keshav Dhandhania and Victor Barres and Karthik Narasimhan},
-      year={2026},
-      eprint={2603.13686},
-      archivePrefix={arXiv},
-      primaryClass={cs.SD},
-      url={https://arxiv.org/abs/2603.13686},
-}
-```
-
-### Core $\tau$-Bench
-
-```bibtex
-
-@misc{barres2025tau2,
-      title={$\tau^2$-Bench: Evaluating Conversational Agents in a Dual-Control Environment}, 
-      author={Victor Barres and Honghua Dong and Soham Ray and Xujie Si and Karthik Narasimhan},
-      year={2025},
-      eprint={2506.07982},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2506.07982}, 
-}
-
-@misc{yao2024tau,
-      title={$\tau$-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains}, 
-      author={Shunyu Yao and Noah Shinn and Pedram Razavi and Karthik Narasimhan},
-      year={2024},
-      eprint={2406.12045},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2406.12045}, 
-}
-```
-
-### Task Fixes
-
-```bibtex
-
-@inproceedings{cuadron2026saber,
-      title={{SABER}: Small Actions, Big Errors {\textemdash} Safeguarding Mutating Steps in {LLM} Agents},
-      author={Alejandro Cuadron and Pengfei Yu and Yang Liu and Arpit Gupta},
-      booktitle={ICLR 2026 Workshop on Memory for LLM-Based Agentic Systems},
-      year={2026},
-      url={https://openreview.net/forum?id=En2z9dckgP},
-}
-```
+公开汇总可以离线查看、重算指标差值；从原始响应重新核算usage和重算官方评分需要保留在本地的私有证据。完整轨迹未随Git发布，公开样本不替代原始数据。未实现跨任务记忆、向量检索、语义摘要或训练，这些不属于第一版交付。

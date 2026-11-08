@@ -1,5 +1,18 @@
 # 三策略统一评测与离线回放
 
+> 当前交付入口见[项目README](../README.md)、[最终实验分析](final_experiment_report_zh.md)及下方公开Demo命令。
+> 本页保留Phase1-06的规划与工程说明；后文“仅有离线计划”“费用unknown”等描述是该阶段状态，
+> 不代表Phase1-07.2之后没有真实结果。最新实际结果为7组有效评分、1组资源停止、1组未执行。
+
+公开结果现可由同一入口只读展示，不依赖本机私有历史目录：
+
+```powershell
+& .\.venv\Scripts\python.exe -X utf8 -B validation/run_memory_comparison.py --demo docs/experiments/phase1_07_2_20261108/metrics.json --task 69
+```
+
+该分支仅接受`docs/experiments/`下指定schema的公开JSON，用于展示派生结果；不会重算官方评分、读取Key或启动模型。
+原有本地证据目录Demo与导出入口保持不变，真实执行仍需新授权。
+
 正式入口：`validation/run_memory_comparison.py`。新增三策略编排和结果分析，继续使用原有 MemoryAgent、Orchestrator、Retail 工具、官方评分和持久请求账本；不另建模型客户端。原双策略默认入口和既有命令保持兼容。
 
 正式提交后的版本校验区分固定上游来源与当前开发HEAD：当前提交必须继承上游，

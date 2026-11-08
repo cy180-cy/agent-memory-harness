@@ -327,7 +327,7 @@ def _render_public_demo(path, task_id=None):
         if row.get("stop_reason"):
             lines.append("停止原因: " + row["stop_reason"])
     lines += ["", "读图提示：train69两次裁剪均在取消成功之后；train73未证明节省；train93有资源停止和未执行。",
-              "原始轨迹不随此公开摘要分发；事实来源示例和讲解见docs/demo_zh.md。",
+              "原始轨迹不随此公开摘要分发；完整分析见docs/final_experiment_report_zh.md。",
               "每组一次的小样本；未完成任务的低Token不是优化收益。本次真实API请求=0。"]
     return "\n".join(lines)
 
